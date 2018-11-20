@@ -9,4 +9,6 @@ git add <file name> || git add . (this add all files)
 
 git commit -m "message here"
 
+git checkout master
+
 git push -u origin feature_branch_name
