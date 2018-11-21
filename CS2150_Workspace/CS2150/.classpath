@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/textures/|Coursework/username/documents/" kind="src" path=""/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LWJGL">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="LWJGL/native"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path=""/>
+</classpath>
