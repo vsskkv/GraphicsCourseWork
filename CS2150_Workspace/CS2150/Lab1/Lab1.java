@@ -52,7 +52,7 @@ public class Lab1 extends GraphicsLab
         // position and draw the first cube
         GL11.glPushMatrix();
         {
-	        GL11.glTranslatef(0.0f, 0.0f, -1.5f);
+	        GL11.glTranslatef(0.0f, -1.0f, -2.0f);
 	        drawUnitCube(Colour.BLUE,Colour.BLUE,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
         }
         GL11.glPopMatrix();
@@ -60,16 +60,16 @@ public class Lab1 extends GraphicsLab
         // position and draw the second cube
         GL11.glPushMatrix();
         {
-	        GL11.glTranslatef(0.0f, 1.0f, -2.0f);
-	        drawUnitCube(Colour.GREEN,Colour.BLUE,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
+	        GL11.glTranslatef(3.0f, -1.0f, 1.0f);
+	        drawUnitCube(Colour.BLUE,Colour.BLUE,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
         }
         GL11.glPopMatrix();
         
         // position and draw the third cube
         GL11.glPushMatrix();
         {
-	        GL11.glTranslatef(0.0f, 2.0f, -2.5f);
-	        drawUnitCube(Colour.YELLOW,Colour.BLUE,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
+	        GL11.glTranslatef(-2.0f, 1.2f, -1.0f);
+	        drawUnitCube(Colour.BLUE,Colour.BLUE,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
         }
         GL11.glPopMatrix();
     }

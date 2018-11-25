@@ -16,21 +16,6 @@ import org.lwjgl.opengl.GL11;
 
 import GraphicsLab.*;
 
-/**
- * This sample demonstrates the use of OpenGL state changes to affect how objects are drawn
- * 
- * <p>Controls:
- * <ul>
- * <li>Press the escape key to exit the application.
- * <li>Hold the x, y and z keys to view the scene along the x, y and z axis, respectively
- * <li>While viewing the scene along the x, y or z axis, use the up and down cursor keys
- *      to increase or decrease the viewpoint's distance from the scene origin
- * </ul>
- *
- * <p>Adapted from Mark Bernard's LWJGL NeHe samples
- *
- * @author Anthony Jones and Dan Cornford
- */
 public class Lab2 extends GraphicsLab
 {	
     public static void main(String args[])
