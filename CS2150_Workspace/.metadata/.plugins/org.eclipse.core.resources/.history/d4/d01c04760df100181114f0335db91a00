@@ -1253,7 +1253,7 @@ public class CS2150Coursework extends GraphicsLab
     }
     
     private void RobotScale() {
-        GL11.glTranslatef(5.0f,-0.5f,-10.0f);
+        GL11.glTranslatef(6.0f,0.0f,-10.0f);
         //GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         GL11.glScalef(0.5f, 0.5f, 0.5f);
     }

@@ -55,7 +55,7 @@ public class CS2150Coursework extends GraphicsLab
     private final int houseList = 1;
     /** display list id for the unit plane */
     private final int planeList = 2;
-/*    // robot list
+    // robot list
     private final int robotLegLeft = 3;
     //
     private final int robotLegRight = 4;
@@ -68,9 +68,7 @@ public class CS2150Coursework extends GraphicsLab
     //
     private final int robotNeck = 8;
     //
-    private final int robotHead = 9;*/
-    
-    private final int DRobot = 3;
+    private final int robotHead = 9;
 
     
     /** the sun/moon's current Y offset from the scene origin */
@@ -144,12 +142,12 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glEndList();
         //Robot parts
-        GL11.glNewList(DRobot, GL11.GL_COMPILE);
+        GL11.glNewList(robotLegLeft, GL11.GL_COMPILE);
         {
-        	DrawRobot();
+        	DrawRobotLegLeft();
         }
         GL11.glEndList();
-/*        GL11.glNewList(robotLegRight, GL11.GL_COMPILE);
+        GL11.glNewList(robotLegRight, GL11.GL_COMPILE);
         {
         	DrawRobotLegRight();
         }
@@ -178,7 +176,7 @@ public class CS2150Coursework extends GraphicsLab
         {
         	DrawRobotHead();
         }
-        GL11.glEndList();*/
+        GL11.glEndList();
     }
     protected void checkSceneInput()
     {
@@ -258,7 +256,7 @@ public class CS2150Coursework extends GraphicsLab
             // position, scale and draw the back plane using its display list
             GL11.glTranslatef(0.0f,4.0f,-20.0f);
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-            GL11.glScalef(300.0f, 100.0f, 15.0f);
+            GL11.glScalef(100.0f, 20.0f, 20.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -282,9 +280,9 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,backGroundTexture.getTextureID());
             
             // position, scale and draw the back plane using its display list
-            GL11.glTranslatef(0.0f, 4.0f,-20.0f);
-            GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-            GL11.glScalef(200.0f, 100.0f, 20.0f);
+            GL11.glTranslatef(4.0f,0.0f,-20.0f);
+            GL11.glRotatef(0.0f, 0.0f, 270.0f, 0.0f);
+            GL11.glScalef(20.0f, 100.0f, 20.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -402,9 +400,9 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
 	        // draw the base of the house using its display list
-	        GL11.glCallList(DRobot);
+	        GL11.glCallList(robotLegLeft);
 	        
-/*//tans + scale + rotate
+//tans + scale + rotate
 	        RobotScale();
 	        
             // Set the material properties for the house using OpenGL
@@ -469,7 +467,7 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
             // draw the roof using its display list
-            GL11.glCallList(robotHead);*/
+            GL11.glCallList(robotHead);
         }
         GL11.glPopMatrix();
     }
@@ -481,9 +479,9 @@ public class CS2150Coursework extends GraphicsLab
     
     private void resetAnimations()
     {
-/*        // reset all attributes that are modified by user controls or animations
+        // reset all attributes that are modified by user controls or animations
         currentSunMoonY = highestSunMoonY;
-        risingSunMoon = true;*/
+        risingSunMoon = true;
     }
     
     /**
@@ -634,16 +632,6 @@ public class CS2150Coursework extends GraphicsLab
             v5.submit();
         }
         GL11.glEnd();
-    }
-    
-    private void DrawRobot() {
-    	DrawRobotLegLeft();
-    	DrawRobotLegRight();
-    	DrawRobotBody();
-    	DrawRobotArmLeft();
-    	DrawRobotArmRight();
-    	DrawRobotNeck();
-    	DrawRobotHead();
     }
     
  private void DrawRobotLegLeft() {
@@ -1253,7 +1241,7 @@ public class CS2150Coursework extends GraphicsLab
     }
     
     private void RobotScale() {
-        GL11.glTranslatef(5.0f,-0.5f,-10.0f);
+        GL11.glTranslatef(5.0f,0.0f,-6.0f);
         //GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         GL11.glScalef(0.5f, 0.5f, 0.5f);
     }

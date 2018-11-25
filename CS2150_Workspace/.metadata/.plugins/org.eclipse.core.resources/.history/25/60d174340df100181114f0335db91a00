@@ -402,9 +402,9 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
 	        // draw the base of the house using its display list
-	        GL11.glCallList(DRobot);
+	        GL11.glCallList(robotLegLeft);
 	        
-/*//tans + scale + rotate
+//tans + scale + rotate
 	        RobotScale();
 	        
             // Set the material properties for the house using OpenGL
@@ -469,7 +469,7 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
             // draw the roof using its display list
-            GL11.glCallList(robotHead);*/
+            GL11.glCallList(robotHead);
         }
         GL11.glPopMatrix();
     }
@@ -1253,7 +1253,7 @@ public class CS2150Coursework extends GraphicsLab
     }
     
     private void RobotScale() {
-        GL11.glTranslatef(5.0f,-0.5f,-10.0f);
+        GL11.glTranslatef(5.0f,0.0f,-6.0f);
         //GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         GL11.glScalef(0.5f, 0.5f, 0.5f);
     }
