@@ -273,7 +273,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
 			 Tree tree = new Tree();
-			 tree.drawTree(0.0f, -1.0f, -12.0f);
+			 tree.drawTree();
         }
         GL11.glPopMatrix();
         
