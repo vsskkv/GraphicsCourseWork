@@ -16,7 +16,7 @@ public class Tree {
 		
 	}
 
-	public void drawTree(float x, float y, float z) {
+	public void drawTree(float xTranslate, float yTranslate, float zTranslate) {
 	    // how shiny are the front faces of the trunk (specular exponent)
 	    float trunkFrontShininess  = 20.0f;
 	    // specular reflection of the front faces of the trunk
@@ -30,7 +30,7 @@ public class Tree {
 	    GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(trunkFrontDiffuse));
 
 	    // position the tree
-	    GL11.glTranslatef(x, y, z);
+	    GL11.glTranslatef(xTranslate, yTranslate, zTranslate);
 	    
 	    // draw the trunk using a cylinder quadric object. Surround the draw call with a
 	    // push/pop matrix pair, as the cylinder will originally be aligned with the Z axis
@@ -59,5 +59,3 @@ public class Tree {
 	    new Sphere().draw(0.8f, 10, 10);
 	}
 }
-
-
