@@ -246,7 +246,7 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        // draw the planet 1
+        // draw the planet
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
@@ -254,7 +254,7 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        // draw the tree 1
+        // draw the tree
         GL11.glPushMatrix();
         {
 			 Tree tree = new Tree();
@@ -262,7 +262,6 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        // draw the tree2
         GL11.glPushMatrix();
         {
 			 Tree tree1 = new Tree();

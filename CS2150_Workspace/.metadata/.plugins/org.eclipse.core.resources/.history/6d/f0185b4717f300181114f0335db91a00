@@ -190,7 +190,7 @@ public class CS2150Coursework extends GraphicsLab
             
             // disable textures and reset any local lighting changes
             GL11.glDisable(GL11.GL_TEXTURE_2D);
-            GL11.glPopAttrib();       	
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -211,7 +211,7 @@ public class CS2150Coursework extends GraphicsLab
             // position, scale and draw the back plane using its display list
             GL11.glTranslatef(0.0f,4.0f,-20.0f);
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-            GL11.glScalef(300.0f, 200.0f, 15.0f);
+            GL11.glScalef(300.0f, 100.0f, 15.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -237,7 +237,7 @@ public class CS2150Coursework extends GraphicsLab
             // position, scale and draw the back plane using its display list
             GL11.glTranslatef(0.0f, 0.0f, 0.0f);
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-            GL11.glScalef(200.0f, 200.0f, 20.0f);
+            GL11.glScalef(200.0f, 100.0f, 20.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -246,27 +246,40 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        // draw the planet 1
+        // draw the planet
         GL11.glPushMatrix();
         {
-        	Planet planet = new Planet();
-        	planet.DrawPlanet(4.0f, 7.0f, -19.0f);
+            // how shiny are the front faces of the moon (specular exponent)
+            float moonFrontShininess  = 2.0f;
+            // specular reflection of the front faces of the moon
+            float moonFrontSpecular[] = {0.6f, 0.6f, 0.6f, 1.0f};
+            // diffuse reflection of the front faces of the moon
+            float moonFrontDiffuse[]  = {0.6f, 0.6f, 0.6f, 1.0f};
+
+            // set the material properties for the sun using OpenGL
+            GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, moonFrontShininess);
+            GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(moonFrontSpecular));
+            GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(moonFrontDiffuse));
+
+            // position and draw the moon using a sphere quadric object
+            GL11.glTranslatef(4.0f, currentSunMoonY, -19.0f);
+            new Sphere().draw(0.5f,10,10);
         }
         GL11.glPopMatrix();
         
-        // draw the tree 1
+        // draw the tree
         GL11.glPushMatrix();
         {
 			 Tree tree = new Tree();
 			 tree.drawTree(0.0f, -1.0f, -11.0f);
+			 Tree tree1 = new Tree();
+			 tree1.drawTree(0.0f, -1.5f, -11.0f);
         }
         GL11.glPopMatrix();
         
-        // draw the tree2
         GL11.glPushMatrix();
         {
-			 Tree tree1 = new Tree();
-			 tree1.drawTree(3.0f, -1.0f, -11.0f);
+        	
         }
         GL11.glPopMatrix();
         // draw the house
@@ -279,11 +292,11 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
 	        
 	        // how shiny are the front faces of the house (specular exponent)
-	        float houseFrontShininess  = 2.0f;
+	        float houseFrontShininess  = 20.0f;
 	        // specular reflection of the front faces of the house
-	        float houseFrontSpecular[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	        float houseFrontSpecular[] = {0.5f, 0.5f, 0.5f, 0.5f};
 	        // diffuse reflection of the front faces of the house
-	        float houseFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
+	        float houseFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 0.5f};
 	        
 	        // set the material properties for the house using OpenGL
 	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, houseFrontShininess);
