@@ -98,8 +98,12 @@ public class Lab5 extends GraphicsLab
     }
     protected void updateScene()
     {// empty
+<<<<<<< HEAD
     }
     
+=======
+   }
+>>>>>>> master
     protected void renderScene()
     {
         // position and scale the house's roof relative to the base of the house
@@ -126,7 +130,10 @@ public class Lab5 extends GraphicsLab
     protected void cleanupScene()
     {// empty
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> master
     private void DrawStarFish() {
     	Vertex v1 = new Vertex(0f, -0.5f, 0.5f);
 		Vertex v2 = new Vertex(0.5f, 0f, 0.5f);

@@ -680,6 +680,7 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !ENTRY org.apache.log4j 2 0 2018-11-29 17:09:20.373
 !MESSAGE org.eclipse.xtext.internal.ExtensionResourceServiceProviderRegistryReader  - Both 'org.eclipse.papyrus.infra.gmfdiag.css3.xtext.ui' and 'org.eclipse.fx.ide.css.ui' register a content parser for 'css'
 
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.core.jobs 4 2 2018-11-29 17:57:39.077
 !MESSAGE An internal error occurred during: "Periodic workspace save.".
@@ -810,3 +811,5 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+=======
+>>>>>>> master
