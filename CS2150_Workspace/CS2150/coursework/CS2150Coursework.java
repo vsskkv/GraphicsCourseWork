@@ -82,7 +82,7 @@ public class CS2150Coursework extends GraphicsLab
     
 
     public static void main(String args[])
-    {   new CS2150Coursework().run(WINDOWED,"Lab 6 - Animation",0.01f);
+    {   new CS2150Coursework().run(WINDOWED,"Coursework-Submission",0.01f);
     }
 
     protected void initScene() throws Exception
@@ -269,6 +269,14 @@ public class CS2150Coursework extends GraphicsLab
 			 tree1.drawTree(3.0f, -1.0f, -11.0f);
         }
         GL11.glPopMatrix();
+        
+        GL11.glPushMatrix();
+        {
+			 Starfish starfish = new Starfish();
+			 starfish.Draw(1.0f, 0.5f, -5.0f);
+        }
+        GL11.glPopMatrix();
+        
         // draw the house
         GL11.glPushMatrix();
         {
@@ -510,7 +518,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glEnd();
 
         // draw the left face:
-        GL11.glBegin(GL11.GL_POLYGON);
+        GL11.glBegin(GL11.GL_POLYGON); 
         {
         	
             new Normal(v2.toVector(),v6.toVector(),v5.toVector(),v1.toVector()).submit();
