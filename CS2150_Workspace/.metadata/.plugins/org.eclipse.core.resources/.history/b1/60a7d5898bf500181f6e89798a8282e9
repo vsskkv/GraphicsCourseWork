@@ -1,5 +1,4 @@
 package coursework;
-//SnowFlake the robot
 
 import org.lwjgl.opengl.GL11;
 
@@ -7,10 +6,6 @@ import GraphicsLab.Normal;
 import GraphicsLab.Vertex;
 
 public class Robot {
-	
-	public Robot() {
-		
-	}
 
 	
 	public void DrawRobot() {

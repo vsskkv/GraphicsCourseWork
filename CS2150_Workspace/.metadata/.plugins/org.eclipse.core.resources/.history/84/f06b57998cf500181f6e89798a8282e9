@@ -328,16 +328,16 @@ public class CS2150Coursework extends GraphicsLab
         //Robot parts that make up the Robot
         GL11.glPushMatrix();
         {
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(32.0f, 0.0f, 1.0f, .0f);
-            GL11.glScalef(0.2f, 0.2f, 0.2f);
+            GL11.glTranslatef(1.0f, -0.5f, -10.0f);
+            //GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+            GL11.glScalef(-0.5f, 0.0f, 0.0f);
 	        
-	        // set the material properties for the robot using OpenGL
+	        // set the material properties for the house using OpenGL
 	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(RobotFrontSpecular));
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
-	        // draw the base of the robot using its display list
+	        // draw the base of the house using its display list
 	        GL11.glCallList(DRobot);
 	        
 

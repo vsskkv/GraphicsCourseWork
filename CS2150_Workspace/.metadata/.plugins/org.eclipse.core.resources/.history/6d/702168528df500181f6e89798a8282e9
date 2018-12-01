@@ -329,7 +329,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(32.0f, 0.0f, 1.0f, .0f);
+            GL11.glRotatef(90.0f, 0.0f, 0.0f, 1.0f);
             GL11.glScalef(0.2f, 0.2f, 0.2f);
 	        
 	        // set the material properties for the robot using OpenGL

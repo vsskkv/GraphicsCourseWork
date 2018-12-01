@@ -110,7 +110,7 @@ public class CS2150Coursework extends GraphicsLab
         // ...with a very dim ambient contribution...
         float ambient0[]  = { 0.05f,  0.05f, 0.05f, 1.0f};
         // ...and is positioned above the viewpoint
-        float position0[] = { 5.0f, 5.0f, 0.0f, 1.0f};
+        float position0[] = { 2.0f, 5.0f, 0.0f, 1.0f};
 
         // supply OpenGL with the properties for the first light
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, FloatBuffer.wrap(ambient0));
@@ -218,7 +218,7 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,backGroundTexture.getTextureID());
             
             // position, scale and draw the back plane using its display list
-            GL11.glTranslatef(40.0f,4.0f,-100.0f);
+            GL11.glTranslatef(0.0f,4.0f,-100.0f);
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
             GL11.glScalef(300.0f, 200.0f, 90.0f);
             GL11.glCallList(planeList);
@@ -260,14 +260,6 @@ public class CS2150Coursework extends GraphicsLab
         {
         	Planet planet = new Planet();
         	planet.DrawPlanet(4.0f, 7.0f, -19.0f, plantTexture);
-        }
-        GL11.glPopMatrix();
-        
-        // draw the planet 2
-        GL11.glPushMatrix();
-        {
-        	Planet planet = new Planet();
-        	planet.DrawPlanet(2.0f, 4.0f, -16.0f, plantTexture);
         }
         GL11.glPopMatrix();
         
@@ -314,10 +306,11 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,BrickTexture.getTextureID());
 	        
             // position and scale of the object
-	        GL11.glTranslatef(4.0f, -0.3f, -15.0f);
-	        GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
+	        GL11.glTranslatef(2.5f, -0.3f, -6.0f);
 	        GL11.glScalef(1.0f, 1.0f, 1.0f);
-	       
+	        // rotate of the object a little so that we can see more of it
+	        GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
+	        
 	        // draw the base of the house using its display list
 	        GL11.glCallList(houseList);
 	        
@@ -328,16 +321,16 @@ public class CS2150Coursework extends GraphicsLab
         //Robot parts that make up the Robot
         GL11.glPushMatrix();
         {
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(32.0f, 0.0f, 1.0f, .0f);
-            GL11.glScalef(0.2f, 0.2f, 0.2f);
+            GL11.glTranslatef(1.0f, -0.5f, -10.0f);
+            //GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+            GL11.glScalef(-0.5f, 0.0f, 0.0f);
 	        
-	        // set the material properties for the robot using OpenGL
+	        // set the material properties for the house using OpenGL
 	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(RobotFrontSpecular));
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
-	        // draw the base of the robot using its display list
+	        // draw the base of the house using its display list
 	        GL11.glCallList(DRobot);
 	        
 

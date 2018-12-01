@@ -1,5 +1,4 @@
 package coursework;
-//SnowFlake the robot
 
 import org.lwjgl.opengl.GL11;
 
