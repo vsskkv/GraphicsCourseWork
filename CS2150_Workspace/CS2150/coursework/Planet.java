@@ -8,7 +8,7 @@ import GraphicsLab.FloatBuffer;
 
 public class Planet {
 	
-	public void DrawPlanet(float xTranslate, float yTranslate, float zTranslate, Texture text) {
+	public void DrawPlanet(float xTranslate, float yTranslate, float zTranslate, Texture text, float size) {
 	    // how shiny are the front faces of the moon (specular exponent)
 	    float moonFrontShininess  = 1.0f;
 	    // specular reflection of the front faces of the moon
@@ -37,7 +37,7 @@ public class Planet {
 	   GL11.glTexGeni(GL11.GL_T, GL11.GL_TEXTURE_GEN_MODE, GL11.GL_SPHERE_MAP);
 	   
 	    GL11.glTranslatef(xTranslate, yTranslate, zTranslate);
-	    new Sphere().draw(0.5f,10,10);
+	    new Sphere().draw(size,10,10);
 	    
 	    GL11.glDisable(GL11.GL_TEXTURE_2D);
 	} 

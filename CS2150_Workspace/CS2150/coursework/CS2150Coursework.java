@@ -76,6 +76,7 @@ public class CS2150Coursework extends GraphicsLab
     private Texture starFishTexture;
     
     private Texture plantTexture;
+    private Texture planet2Texture;
     
     private Texture BrickTexture;
     
@@ -98,6 +99,7 @@ public class CS2150Coursework extends GraphicsLab
         backGroundTexture = loadTexture("coursework/textures/space.bmp");
         starFishTexture = loadTexture("coursework/textures/1.bmp");
         plantTexture = loadTexture("coursework/textures/planet1.bmp");
+        planet2Texture = loadTexture("coursework/textures/planet2.bmp");
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
 
         // global ambient light level
@@ -259,7 +261,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
-        	planet.DrawPlanet(4.0f, 7.0f, -19.0f, plantTexture);
+        	planet.DrawPlanet(4.0f, 7.0f, -19.0f, plantTexture, 0.5f);
         }
         GL11.glPopMatrix();
         
@@ -267,7 +269,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
-        	planet.DrawPlanet(2.0f, 4.0f, -16.0f, plantTexture);
+        	planet.DrawPlanet(2.0f, 4.0f, -16.0f, planet2Texture, 0.7f);
         }
         GL11.glPopMatrix();
         
@@ -329,8 +331,8 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(32.0f, 0.0f, 1.0f, .0f);
-            GL11.glScalef(0.2f, 0.2f, 0.2f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, .0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
 	        
 	        // set the material properties for the robot using OpenGL
 	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);
