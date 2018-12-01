@@ -42,10 +42,10 @@ public class Lab3 extends GraphicsLab
     protected void initScene()
     {
         // build the unit cube display list for later use
-        GL11.glNewList(cubeList,GL11.GL_COMPILE);
+/*        GL11.glNewList(cubeList,GL11.GL_COMPILE);
         {   drawUnitCube(Colour.RED,Colour.RED,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
         }
-        GL11.glEndList();
+        GL11.glEndList();*/
     }
     protected void checkSceneInput()
     {// empty
@@ -61,7 +61,7 @@ public class Lab3 extends GraphicsLab
         GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
         
         // draw the base of the house by calling the appropriate display list
-        GL11.glCallList(cubeList);
+       drawUnitCube(Colour.RED,Colour.RED,Colour.RED,Colour.RED,Colour.GREEN,Colour.GREEN);
     }
     protected void cleanupScene()
     {// empty

@@ -69,9 +69,15 @@ public class CS2150Coursework extends GraphicsLab
     /** ids for nearest, linear and mipmapped textures for the ground plane */
     private Texture groundTextures;
     /** ids for nearest, linear and mipmapped textures for the night time back background plane 
-     * {@link https://fstoppers.com/news/japan-landed-space-rovers-asteroid-and-first-pictures-are-here-292344}
+     * {@link https://fstoppers.com/news/japan-landed-space-rovers-aste0roid-and-first-pictures-are-here-292344}
      * */
     private Texture backGroundTexture;
+    
+    private Texture starFishTexture;
+    
+    private Texture plantTexture;
+    
+    private Texture BrickTexture;
     
     // how shiny are the front faces of the house (specular exponent)
     private float RobotFrontShininess  = 2.0f;
@@ -88,12 +94,14 @@ public class CS2150Coursework extends GraphicsLab
     protected void initScene() throws Exception
     {
         // load the textures
-        groundTextures = loadTexture("Lab6/textures/Grass01.bmp");
-        //skyDayTextures = loadTexture("Lab6/textures/daySky.bmp");
-        backGroundTexture = loadTexture("Lab6/textures/space.bmp");
+        groundTextures = loadTexture("coursework/textures/Grass01.bmp");
+        backGroundTexture = loadTexture("coursework/textures/space.bmp");
+        starFishTexture = loadTexture("coursework/textures/1.bmp");
+        plantTexture = loadTexture("coursework/textures/planet1.bmp");
+        BrickTexture = loadTexture("coursework/textures/brick.bmp");
 
         // global ambient light level
-        float globalAmbient[]   = {0.2f,  0.2f,  0.2f, 1.0f};
+        float globalAmbient[]   = {0.7f,  0.7f,  0.7f, 1.0f};
         // set the global ambient lighting
         GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,FloatBuffer.wrap(globalAmbient));
 
@@ -102,7 +110,7 @@ public class CS2150Coursework extends GraphicsLab
         // ...with a very dim ambient contribution...
         float ambient0[]  = { 0.05f,  0.05f, 0.05f, 1.0f};
         // ...and is positioned above the viewpoint
-        float position0[] = { 0.0f, 10.0f, 0.0f, 1.0f};
+        float position0[] = { 1.0f, 1.0f, 0.0f, 1.0f};
 
         // supply OpenGL with the properties for the first light
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, FloatBuffer.wrap(ambient0));
@@ -119,7 +127,7 @@ public class CS2150Coursework extends GraphicsLab
         
         // prepare the display lists for later use
         GL11.glNewList(houseList,GL11.GL_COMPILE);
-        {   drawUnitCube(Colour.RED);
+        {   drawUnitCube();
         }
         GL11.glEndList();
         
@@ -185,7 +193,7 @@ public class CS2150Coursework extends GraphicsLab
             
             // position, scale and draw the ground plane using its display list
             GL11.glTranslatef(0.0f,-1.0f,-10.0f);
-            GL11.glScalef(25.0f, 1.0f, 20.0f);
+            GL11.glScalef(50.0f, 2.0f, 40.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -209,9 +217,9 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,backGroundTexture.getTextureID());
             
             // position, scale and draw the back plane using its display list
-            GL11.glTranslatef(0.0f,4.0f,-20.0f);
+            GL11.glTranslatef(0.0f,4.0f,-40.0f);
             GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-            GL11.glScalef(300.0f, 200.0f, 15.0f);
+            GL11.glScalef(300.0f, 200.0f, 90.0f);
             GL11.glCallList(planeList);
             
             // disable textures and reset any local lighting changes
@@ -250,7 +258,7 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
-        	planet.DrawPlanet(4.0f, 7.0f, -19.0f);
+        	planet.DrawPlanet(4.0f, 7.0f, -19.0f, plantTexture);
         }
         GL11.glPopMatrix();
         
@@ -266,30 +274,25 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
 			 Tree tree1 = new Tree();
-			 tree1.drawTree(3.0f, -1.0f, -11.0f);
+			 tree1.drawTree(3.0f, -1.0f, -15.0f);
         }
         GL11.glPopMatrix();
         
         GL11.glPushMatrix();
         {
 			 Starfish starfish = new Starfish();
-			 starfish.Draw(1.0f, 0.5f, -5.0f);
+			 starfish.Draw(2.0f, 1.0f, -5.0f, starFishTexture);
         }
         GL11.glPopMatrix();
         
         // draw the house
         GL11.glPushMatrix();
         {
-            // position and scale of the object
-	        GL11.glTranslatef(3.5f, -0.3f, -12.0f);
-	        GL11.glScalef(1.0f, 1.0f, 1.0f);
-	        // rotate of the object a little so that we can see more of it
-	        GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
-	        
+
 	        // how shiny are the front faces of the house (specular exponent)
 	        float houseFrontShininess  = 2.0f;
 	        // specular reflection of the front faces of the house
-	        float houseFrontSpecular[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	        float houseFrontSpecular[] = {1.0f, 0.0f, 0.0f, 1.0f};
 	        // diffuse reflection of the front faces of the house
 	        float houseFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
 	        
@@ -298,8 +301,19 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(houseFrontSpecular));
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(houseFrontDiffuse));
 
+	        GL11.glEnable(GL11.GL_TEXTURE_2D);
+	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,BrickTexture.getTextureID());
+	        
+            // position and scale of the object
+	        GL11.glTranslatef(2.5f, -0.3f, -6.0f);
+	        GL11.glScalef(1.0f, 1.0f, 1.0f);
+	        // rotate of the object a little so that we can see more of it
+	        GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
+	        
 	        // draw the base of the house using its display list
 	        GL11.glCallList(houseList);
+	        
+	        GL11.glDisable(GL11.GL_TEXTURE_2D);
         }
         GL11.glPopMatrix();
         
@@ -384,58 +398,63 @@ public class CS2150Coursework extends GraphicsLab
         }
     }
     
-    private void drawUnitCube(Colour col)
+    private void drawUnitCube()
     {
         // the vertices for the cube (note that all sides have a length of 1)
         Vertex v1 = new Vertex(-0.5f, -0.5f,  0.5f);
         Vertex v2 = new Vertex(-0.5f,  0.5f,  0.5f);
-        Vertex v3 = new Vertex( 0.5f,  0.5f,  0.5f);
-        Vertex v4 = new Vertex( 0.5f, -0.5f,  0.5f);
+        Vertex v3 = new Vertex( 1.5f,  0.5f,  0.5f);
+        Vertex v4 = new Vertex( 1.5f, -0.5f,  0.5f);
         Vertex v5 = new Vertex(-0.5f, -0.5f, -0.5f);
         Vertex v6 = new Vertex(-0.5f,  0.5f, -0.5f);
-        Vertex v7 = new Vertex( 0.5f,  0.5f, -0.5f);
-        Vertex v8 = new Vertex( 0.5f, -0.5f, -0.5f);
+        Vertex v7 = new Vertex( 1.5f,  0.5f, -0.5f);
+        Vertex v8 = new Vertex( 1.5f, -0.5f, -0.5f);
 
 
         // draw the near face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	
-        	
             new Normal(v3.toVector(),v2.toVector(),v1.toVector(),v4.toVector()).submit();
             
+            GL11.glTexCoord2f(4.0f,4.0f);
             v3.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v2.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v1.submit();
-            v4.submit();col.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
+            v4.submit();
         }
         GL11.glEnd();
 
         // draw the left face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	
             new Normal(v2.toVector(),v6.toVector(),v5.toVector(),v1.toVector()).submit();
             
-        	v2.submit();
+            GL11.glTexCoord2f(4.0f,4.0f);
+            v2.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v6.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v5.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
             v1.submit();
-            
-            col.submit();
         }
         GL11.glEnd();
 
         // draw the right face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	col.submit();
-        	
             new Normal(v7.toVector(),v3.toVector(),v4.toVector(),v8.toVector()).submit();
             
+            GL11.glTexCoord2f(4.0f,4.0f);
             v7.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v3.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v4.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
             v8.submit();
         }
         GL11.glEnd();
@@ -443,13 +462,15 @@ public class CS2150Coursework extends GraphicsLab
         // draw the top face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	col.submit();
-        	
             new Normal(v7.toVector(),v6.toVector(),v2.toVector(),v3.toVector()).submit();
             
+            GL11.glTexCoord2f(4.0f,4.0f);
             v7.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v6.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v2.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
             v3.submit();
         }
         GL11.glEnd();
@@ -457,13 +478,15 @@ public class CS2150Coursework extends GraphicsLab
         // draw the bottom face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	col.submit();
-        	
             new Normal(v4.toVector(),v1.toVector(),v5.toVector(),v8.toVector()).submit();
             
+            GL11.glTexCoord2f(4.0f,4.0f);
             v4.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v1.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v5.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
             v8.submit();
         }
         GL11.glEnd();
@@ -471,13 +494,15 @@ public class CS2150Coursework extends GraphicsLab
         // draw the far face:
         GL11.glBegin(GL11.GL_POLYGON);
         {
-        	col.submit();
-        	
             new Normal(v6.toVector(),v7.toVector(),v8.toVector(),v5.toVector()).submit();
             
+            GL11.glTexCoord2f(4.0f,4.0f);
             v6.submit();
+            GL11.glTexCoord2f(0.0f,4.0f);
             v7.submit();
+            GL11.glTexCoord2f(0.0f,0.0f);
             v8.submit();
+            GL11.glTexCoord2f(4.0f,0.0f);
             v5.submit();
         }
         GL11.glEnd();

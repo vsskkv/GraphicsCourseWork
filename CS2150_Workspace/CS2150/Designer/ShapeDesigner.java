@@ -34,18 +34,20 @@ public class ShapeDesigner extends AbstractDesigner {
     }
 	
 	/** Draw the shape **/
-    protected void drawUnitShape()
-    {
-/*    	DrawRobotLegLeft();
-    	DrawRobotLegRight();
-    	DrawRobotBody();
-    	DrawRobotArmLeft();
-    	DrawRobotArmRight();
-    	DrawRobotNeck(); 
-    	DrawRobotHead();*/
-    	
-    	DrawStarFish();
-    }
+	    protected void drawUnitShape()
+	    {
+	/*    	DrawRobotLegLeft();
+	    	DrawRobotLegRight();
+	    	DrawRobotBody();
+	    	DrawRobotArmLeft();
+	    	DrawRobotArmRight();
+	    	DrawRobotNeck(); 
+	    	DrawRobotHead();*/
+	    	
+	    	DrawStarFish(Colour.BLUE);
+	    }
+
+
     
     private void DrawRobotLegLeft() {
     	
@@ -652,8 +654,84 @@ public class ShapeDesigner extends AbstractDesigner {
         }
         GL11.glEnd();
     }
-    private void DrawStarFish() {
+    private void DrawStarFish(Colour bottom) {
+    	/*Vertex v1 = new Vertex(0.7f, -0.5f, 1.0f);
+		Vertex v2 = new Vertex(1.2f, -0.5f, 1.2f);
+		Vertex v3 = new Vertex(1.8f, -0.5f, 1.0f);
+		Vertex v4 = new Vertex(1.7f, -0.5f, 1.5f);
+		Vertex v5 = new Vertex(2.0f, -0.5f, 1.9f);
+		Vertex v6 = new Vertex(1.5f, -0.5f, 2.0f);
+		Vertex v7 = new Vertex(1.2f, -0.5f, 2.5f);
+		Vertex v8 = new Vertex(1.0f, -0.5f, 2.0f);
+		Vertex v9 = new Vertex(0.5f, -0.5f, 1.9f);
+		Vertex v10 = new Vertex(0.9f, -0.5f, 1.5f);
+		
+		Vertex v11 = new Vertex(1.2f, -0.2f, 1.7f);
 
+		GL11.glBegin(GL11.GL_POLYGON);
+		{	
+		bottom.submit();
+		
+			v1.submit();
+			v2.submit();
+			v3.submit();
+			v4.submit();
+			v5.submit();
+			v6.submit();
+			v7.submit();
+			v8.submit();
+			v9.submit();
+			v10.submit();
+			v1.submit();
+			
+		}
+		GL11.glEnd();
+		
+        GL11.glBegin(GL11.GL_POLYGON);
+        {            
+            v11.submit();
+            v1.submit();
+            v2.submit();
+            //v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {            
+            v11.submit();
+            v3.submit();
+            v4.submit();
+            //v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {            
+            v11.submit();
+            v5.submit();
+            v6.submit();
+            //v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {            
+            v11.submit();
+            v7.submit();
+            v8.submit();
+            //v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {            
+            v11.submit();
+            v9.submit();
+            v10.submit();
+            //v11.submit();
+        }
+        GL11.glEnd();
+    }*/
     	Vertex v1 = new Vertex(0.7f, -0.5f, 1.0f);
 		Vertex v2 = new Vertex(1.2f, -0.5f, 1.2f);
 		Vertex v3 = new Vertex(1.8f, -0.5f, 1.0f);
@@ -668,17 +746,42 @@ public class ShapeDesigner extends AbstractDesigner {
 		Vertex v11 = new Vertex(1.2f, -0.2f, 1.7f);
 
 		
+		GL11.glBegin(GL11.GL_POLYGON);
+		{
+			
+			new Normal(v1.toVector(), v2.toVector(), v3.toVector(), v4.toVector(), v5.toVector(), v6.toVector(), v7.toVector(), v8.toVector(), v9.toVector(), v10.toVector()).submit();
+		
+			v1.submit();
+			v2.submit();
+			v3.submit();
+			v4.submit();
+			v5.submit();
+			v6.submit();
+			v7.submit();
+			v8.submit();
+			v9.submit();
+			v10.submit();
+			//v1.submit();
+			
+		}
+		GL11.glEnd();
+		
         GL11.glBegin(GL11.GL_POLYGON);
-        {            
+        {   
+        	
+        	new Normal(v11.toVector(), v1.toVector(), v2.toVector()).submit();
+        	
             v11.submit();
             v1.submit();
             v2.submit();
-            v11.submit();
         }
         GL11.glEnd();
         
         GL11.glBegin(GL11.GL_POLYGON);
-        {            
+        {     
+        	
+        	new Normal(v11.toVector(), v3.toVector(), v4.toVector()).submit();
+        	
             v11.submit();
             v3.submit();
             v4.submit();
@@ -687,7 +790,10 @@ public class ShapeDesigner extends AbstractDesigner {
         GL11.glEnd();
         
         GL11.glBegin(GL11.GL_POLYGON);
-        {            
+        {        
+        	
+        	new Normal(v11.toVector(), v5.toVector(), v6.toVector()).submit();
+        	
             v11.submit();
             v5.submit();
             v6.submit();
@@ -696,7 +802,9 @@ public class ShapeDesigner extends AbstractDesigner {
         GL11.glEnd();
         
         GL11.glBegin(GL11.GL_POLYGON);
-        {            
+        {     
+        	new Normal(v11.toVector(), v7.toVector(), v8.toVector()).submit();
+        	
             v11.submit();
             v7.submit();
             v8.submit();
@@ -705,7 +813,9 @@ public class ShapeDesigner extends AbstractDesigner {
         GL11.glEnd();
         
         GL11.glBegin(GL11.GL_POLYGON);
-        {            
+        {     
+        	
+        	new Normal(v11.toVector(), v9.toVector(), v10.toVector()).submit();
             v11.submit();
             v9.submit();
             v10.submit();
@@ -713,5 +823,4 @@ public class ShapeDesigner extends AbstractDesigner {
         }
         GL11.glEnd();
     }
-    
 }

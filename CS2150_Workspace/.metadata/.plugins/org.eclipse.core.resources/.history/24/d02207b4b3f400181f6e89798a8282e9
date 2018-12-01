@@ -1,0 +1,120 @@
+package coursework;
+
+import org.lwjgl.opengl.GL11;
+
+import GraphicsLab.Colour;
+import GraphicsLab.FloatBuffer;
+import GraphicsLab.Vertex;
+
+public class Starfish {
+	
+	public void Draw(float xTranslate, float yTranslate, float zTranslate) {
+        // position and scale of the object
+        GL11.glTranslatef(xTranslate, yTranslate, zTranslate);
+        GL11.glScalef(0.5f, 0.5f, 0.5f);
+        
+        // how shiny are the front faces of the house (specular exponent)
+        float FishFrontShininess  = 20.0f;
+        // specular reflection of the front faces of the house
+        float FishFrontSpecular[] = {0.5f, 0.5f, 0.5f, 2.0f};
+        // diffuse reflection of the front faces of the house
+        float FishFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 5.0f};
+        
+        // set the material properties for the house using OpenGL
+        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, FishFrontShininess);
+        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(FishFrontSpecular));
+        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(FishFrontDiffuse));
+
+        // draw the star fish
+        DrawStarFish(Colour.BLUE);
+	}
+
+    private void DrawStarFish(Colour bottom) {
+    	Vertex v1 = new Vertex(0.7f, -0.5f, 1.0f);
+		Vertex v2 = new Vertex(1.2f, -0.5f, 1.2f);
+		Vertex v3 = new Vertex(1.8f, -0.5f, 1.0f);
+		Vertex v4 = new Vertex(1.7f, -0.5f, 1.5f);
+		Vertex v5 = new Vertex(2.0f, -0.5f, 1.9f);
+		Vertex v6 = new Vertex(1.5f, -0.5f, 2.0f);
+		Vertex v7 = new Vertex(1.2f, -0.5f, 2.5f);
+		Vertex v8 = new Vertex(1.0f, -0.5f, 2.0f);
+		Vertex v9 = new Vertex(0.5f, -0.5f, 1.9f);
+		Vertex v10 = new Vertex(0.9f, -0.5f, 1.5f);
+		
+		Vertex v11 = new Vertex(1.2f, -0.2f, 1.7f);
+
+		GL11.glBegin(GL11.GL_POLYGON);
+		{	
+			bottom.submit();
+		
+			v1.submit();
+			v2.submit();
+			v3.submit();
+			v4.submit();
+			v5.submit();
+			v6.submit();
+			v7.submit();
+			v8.submit();
+			v9.submit();
+			v10.submit();
+			//v1.submit();
+			
+		}
+		GL11.glEnd();
+		
+        /*GL11.glBegin(GL11.GL_POLYGON);
+        {   
+        	bottom.submit();
+        	
+            v11.submit();
+            v1.submit();
+            v2.submit();
+            v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {     
+        	bottom.submit();
+        	
+            v11.submit();
+            v3.submit();
+            v4.submit();
+            v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {        
+        	bottom.submit();
+        	
+            v11.submit();
+            v5.submit();
+            v6.submit();
+            v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {     
+        	bottom.submit();
+        	
+            v11.submit();
+            v7.submit();
+            v8.submit();
+            v11.submit();
+        }
+        GL11.glEnd();
+        
+        GL11.glBegin(GL11.GL_POLYGON);
+        {     
+        	bottom.submit();
+        	
+            v11.submit();
+            v9.submit();
+            v10.submit();
+            v11.submit();
+        }
+        GL11.glEnd();*/
+    }
+}

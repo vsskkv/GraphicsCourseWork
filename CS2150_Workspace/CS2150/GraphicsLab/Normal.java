@@ -75,6 +75,41 @@ public class Normal
         // now normalise the result to have length 1
         normalise();
     }
+    
+    public Normal(Vector vec1, Vector vec2, Vector vec3, Vector vec4, Vector vec5, Vector vec6, Vector vec7, Vector vec8, Vector vec9, Vector vec10) {
+    	x = (vec1.getY()-vec2.getY())*(vec1.getZ()+vec2.getZ()) +
+            (vec2.getY()-vec3.getY())*(vec2.getZ()+vec3.getZ()) +
+            (vec3.getY()-vec4.getY())*(vec3.getZ()+vec4.getZ()) +
+            (vec4.getY()-vec5.getY())*(vec4.getZ()+vec5.getZ()) +
+            (vec5.getY()-vec6.getY())*(vec5.getZ()+vec6.getZ()) +
+            (vec6.getY()-vec7.getY())*(vec6.getZ()+vec7.getZ()) +
+            (vec7.getY()-vec8.getY())*(vec7.getZ()+vec8.getZ()) +
+            (vec8.getY()-vec9.getY())*(vec8.getZ()+vec9.getZ()) +
+            (vec9.getY()-vec10.getY())*(vec9.getZ()+vec10.getZ())+
+            (vec10.getY()-vec1.getY())*(vec10.getZ()+vec1.getZ());
+    	
+    	y = (vec1.getZ()-vec2.getZ())*(vec1.getX()+vec2.getX()) +
+    	    (vec2.getZ()-vec3.getZ())*(vec2.getX()+vec3.getX()) +
+    	    (vec3.getZ()-vec4.getZ())*(vec3.getX()+vec4.getX()) +
+    	    (vec4.getZ()-vec5.getZ())*(vec4.getX()+vec5.getX()) +
+    	    (vec5.getZ()-vec6.getZ())*(vec5.getX()+vec6.getX()) +
+    	    (vec6.getZ()-vec7.getZ())*(vec6.getX()+vec7.getX()) +
+    	    (vec7.getZ()-vec8.getZ())*(vec7.getX()+vec8.getX()) +
+    	    (vec8.getZ()-vec9.getZ())*(vec8.getX()+vec9.getX()) +
+    	    (vec9.getZ()-vec10.getZ())*(vec9.getX()+vec10.getX()) +
+    	    (vec10.getZ()-vec1.getZ())*(vec10.getX()+vec1.getX());
+    	
+        z = (vec1.getX()-vec2.getX())*(vec1.getY()+vec2.getY()) +
+            (vec2.getX()-vec3.getX())*(vec2.getY()+vec3.getY()) +
+            (vec3.getX()-vec4.getX())*(vec3.getY()+vec4.getY()) +
+            (vec4.getX()-vec5.getX())*(vec4.getY()+vec5.getY()) +
+            (vec5.getX()-vec6.getX())*(vec5.getY()+vec6.getY()) +
+            (vec6.getX()-vec7.getX())*(vec6.getY()+vec7.getY()) +
+            (vec7.getX()-vec8.getX())*(vec7.getY()+vec8.getY()) +
+            (vec8.getX()-vec9.getX())*(vec8.getY()+vec9.getY()) +
+            (vec9.getX()-vec10.getX())*(vec9.getY()+vec10.getY()) +
+            (vec10.getX()-vec1.getX())*(vec10.getY()+vec1.getY());
+    }
 	
     /**
      * @return the x value of the normal 
