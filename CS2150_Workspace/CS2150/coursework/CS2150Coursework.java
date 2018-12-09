@@ -21,9 +21,9 @@
  */
 package coursework;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Sphere;
+import org.lwjgl.util.glu.GLU;
 
-import java.util.Date;
+import javax.security.auth.callback.NameCallback;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
@@ -54,17 +54,6 @@ public class CS2150Coursework extends GraphicsLab
     private final int houseList = 1;
     /** display list id for the unit plane */
     private final int planeList = 2;
-    /** display list for robot */ 
-    private final int DRobot = 3;
-
-    /** the sun/moon's current Y offset from the scene origin */
-    private float currentSunMoonY = 7.0f;
-    /** the sun/moon's highest possible Y offset */
-    private final float highestSunMoonY = currentSunMoonY;
-    /** the sun/moon's lowest possible Y offset */
-    private final float lowestSunMoonY  = -2.0f;
-    /** is the sun/moon rising? (false = the sun/moon is falling) */
-    private boolean risingSunMoon = true;
 
     /** ids for nearest, linear and mipmapped textures for the ground plane */
     private Texture groundTextures;
@@ -72,20 +61,23 @@ public class CS2150Coursework extends GraphicsLab
      * {@link https://fstoppers.com/news/japan-landed-space-rovers-aste0roid-and-first-pictures-are-here-292344}
      * */
     private Texture backGroundTexture;
-    
     private Texture starFishTexture;
-    
     private Texture plantTexture;
     private Texture planet2Texture;
-    
+    private Texture planet3Texture;
     private Texture BrickTexture;
     
-    // how shiny are the front faces of the house (specular exponent)
-    private float RobotFrontShininess  = 2.0f;
-    // specular reflection of the front faces of the house
-    private float RobotFrontSpecular[] = {0.1f, 0.0f, 0.0f, 1.0f};
-    // diffuse reflection of the front faces of the house
-    private float RobotFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
+    private Robot robot1 = new Robot();
+    
+    private float update = 0.0f;
+    private float topValue = -0.5f;
+    private float bottomValue = -0.58f;
+    private float currentValue = -0.5f;
+    private boolean reached = false;
+    
+    private boolean headRoation = false; 
+    private float headSpin = 0.0f;
+
     
 
     public static void main(String args[])
@@ -98,8 +90,9 @@ public class CS2150Coursework extends GraphicsLab
         groundTextures = loadTexture("coursework/textures/Grass01.bmp");
         backGroundTexture = loadTexture("coursework/textures/space.bmp");
         starFishTexture = loadTexture("coursework/textures/1.bmp");
-        plantTexture = loadTexture("coursework/textures/planet1.bmp");
+        plantTexture = loadTexture("coursework/textures/space2.jpg");
         planet2Texture = loadTexture("coursework/textures/planet2.bmp");
+        planet3Texture = loadTexture("coursework/textures/Planet3.png");
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
 
         // global ambient light level
@@ -137,45 +130,52 @@ public class CS2150Coursework extends GraphicsLab
         {   drawUnitPlane();
         }
         GL11.glEndList();
-        //Robot parts
-        GL11.glNewList(DRobot, GL11.GL_COMPILE);
-        {
-        	Robot robot = new Robot();
-        	robot.DrawRobot();
-        }
-        GL11.glEndList();
     }
     protected void checkSceneInput()
     {
-/*        if(Keyboard.isKeyDown(Keyboard.KEY_R))
-        {   risingSunMoon = true;
-        }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_L))
-        {   risingSunMoon = false;
-        }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-        {   resetAnimations();
-        }
-        else if(Keyboard.isKeyDown(Keyboard.KEY_V ))
-        {   RotationAngle += 1.0f * getAnimationScale(); // Make the house go around if the R key is pressed
-            if (RotationAngle > 360.0f) // Wrap the angle back around into 0-360 degrees.
-            {  
-            	RotationAngle = 0.0f;
-            }
-        }*/
+
     }
+    
+    protected void setSceneCamera()
+    {
+        // use the default projection settings
+        super.setSceneCamera();
+    }
+    
     protected void updateScene()
     {
-/*        // if the sun/moon is rising, and it isn't at its highest,
-        // then increment the sun/moon's Y offset
-        if(risingSunMoon && currentSunMoonY < highestSunMoonY)
-        {   currentSunMoonY += 1.0f * getAnimationScale();
-        }
-        // else if the sun/moon is falling, and it isn't at its lowest,
-        // then decrement the sun/moon's Y offset
-        else if(!risingSunMoon && currentSunMoonY > lowestSunMoonY)
-        {   currentSunMoonY -= 1.0f * getAnimationScale();
-        }*/
+
+    	
+    	update += + 1.0f * getAnimationScale();
+    	
+    	if(headRoation == false) {
+    		headSpin += 1.0f * getAnimationScale();
+    		if(headSpin >= 40.0f) {
+    			headRoation = true;
+    		}
+    	}
+    	if(headRoation == true){
+    		headSpin -= 1.0f * getAnimationScale();
+    		if(headSpin <= -40.0f) {
+    			headRoation = false;
+    		}
+    	}
+    	System.out.println(headSpin);
+    	
+    	if(reached == false) {
+    		currentValue = currentValue - 0.0001f;
+    		if(currentValue <= bottomValue) {
+    			reached = true;
+    		}
+    	}
+    	if(reached == true){
+    		currentValue = currentValue + 0.0001f;
+    		if(currentValue >= topValue) {
+    			reached = false;
+    		}
+    	}
+    	
+
     }
     protected void renderScene()
     {
@@ -257,20 +257,31 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        // draw the planet 1
-        GL11.glPushMatrix();
-        {
-        	Planet planet = new Planet();
-        	planet.DrawPlanet(4.0f, 7.0f, -19.0f, plantTexture, 0.5f);
-        }
-        GL11.glPopMatrix();
-        
         // draw the planet 2
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
         	planet.DrawPlanet(2.0f, 4.0f, -16.0f, planet2Texture, 0.7f);
         }
+        GL11.glPopMatrix();
+        
+        // first planet with moon rotating
+        GL11.glPushMatrix();
+        {
+            // the planet 1
+            GL11.glTranslatef(4.0f,6.0f,-18.0f);
+            // draw the Earth
+            Planet pp = new Planet();
+            pp.drawBody(plantTexture, 0.6f);
+            
+            // rotate the Moon around the Earth
+            GL11.glRotatef((360.0f*update*0.05f),0.0f,1.0f,0.0f);
+            // the Moon is .5 units from the Earth
+            GL11.glTranslatef(1.0f,0.0f,0.0f);
+            // draw the moon
+            pp.drawBody(planet3Texture, 0.3f);
+
+        }// restore origin
         GL11.glPopMatrix();
         
         // draw the tree 1
@@ -327,25 +338,81 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
-        //Robot parts that make up the Robot
         GL11.glPushMatrix();
         {
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, .0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
-	        
-	        // set the material properties for the robot using OpenGL
-	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);
-	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(RobotFrontSpecular));
-	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
 
-	        // draw the base of the robot using its display list
-	        GL11.glCallList(DRobot);
-	        
-
+	        // draw the base of the robot body t
+	        robot1.DrawRobotBody();
         }
         GL11.glPopMatrix();
-    }
+        
+        GL11.glPushMatrix();
+        {
+        // draw the ll using its display list
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+        robot1.DrawRobotLegLeft();
+        }
+        GL11.glPopMatrix();
+        
+        
+        GL11.glPushMatrix();
+        {
+        // draw the roof using its display list
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+        robot1.DrawRobotLegRight();
+        }
+        GL11.glPopMatrix();
+        
+        
+        GL11.glPushMatrix();
+        {
+        // draw the roof using its display list
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+        robot1.DrawRobotNeck();
+            
+        }
+        GL11.glPopMatrix();
+        
+        GL11.glPushMatrix();
+        {
+        // draw the roof using its display list
+            GL11.glTranslatef(0.0f, currentValue, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+        robot1.DrawRobotArmLeft();
+        }
+        GL11.glPopMatrix();
+        
+        GL11.glPushMatrix();
+        {
+        // draw the roof using its display list
+            GL11.glTranslatef(0.0f, currentValue, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+        robot1.DrawRobotArmRight();
+	    }
+	    GL11.glPopMatrix();
+	    
+       GL11.glPushMatrix();
+	    {
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(headSpin, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+            
+            
+        robot1.DrawRobotHead();
+		}
+		GL11.glPopMatrix();
+}
     
     protected void cleanupScene()
     {// empty
@@ -520,5 +587,18 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glEnd();
     }
     
+    private void RobotLighting() {
+        // how shiny are the front faces of the robot (specular exponent)
+        float RobotFrontShininess  = 2.0f;
+        // specular reflection of the front faces of the house
+        float RobotFrontSpecular[] = {0.1f, 0.0f, 0.0f, 1.0f};
+        // diffuse reflection of the front faces of the house
+        float RobotFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
+        
+        // set the material properties for the house using OpenGL
+        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);
+        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(RobotFrontSpecular));
+        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(RobotFrontDiffuse));
+    }
     
 }

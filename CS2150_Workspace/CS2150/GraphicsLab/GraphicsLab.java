@@ -229,6 +229,7 @@ public abstract class GraphicsLab
             }
         }
         
+        
         // Window height-to-width ratio
         hwratio = (float)displayMode.getWidth() / (float) displayMode.getHeight();
         Display.setDisplayMode(displayMode);
