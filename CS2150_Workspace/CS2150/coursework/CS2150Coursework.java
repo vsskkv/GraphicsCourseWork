@@ -56,6 +56,8 @@ public class CS2150Coursework extends GraphicsLab
     private final int planeList = 2;
     
     private final int robotList = 3;
+    
+    private final int starList = 4;
 
     /** ids for nearest, linear and mipmapped textures for the ground plane */
     private Texture groundTextures;
@@ -68,8 +70,9 @@ public class CS2150Coursework extends GraphicsLab
     private Texture planet2Texture;
     private Texture planet3Texture;
     private Texture BrickTexture;
-    private Texture robotFront;
-    private Texture robotBack;
+    private Texture robotFrontTexture;
+    private Texture robotBackTexture;
+    private Texture starTexture;
     
     private Robot robot1 = new Robot();
     
@@ -100,9 +103,10 @@ public class CS2150Coursework extends GraphicsLab
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
         
         //Robot Textures
-        robotFront = loadTexture("coursework/textures/RobotTextures/robot.png");
-        robotBack = loadTexture("coursework/textures/RobotTextures/robotBack.png");
-
+        robotFrontTexture = loadTexture("coursework/textures/RobotTextures/robot.png");
+        robotBackTexture = loadTexture("coursework/textures/RobotTextures/robotBack.png");
+        
+        starTexture = loadTexture("coursework/textures/shootingStar.png");
         // global ambient light level
         float globalAmbient[]   = {0.7f,  0.7f,  0.7f, 1.0f};
         // set the global ambient lighting
@@ -138,6 +142,9 @@ public class CS2150Coursework extends GraphicsLab
         {   drawUnitPlane();
         }
         GL11.glNewList(robotList,GL11.GL_COMPILE);
+        {   drawUnitPlane();
+        }
+        GL11.glNewList(starList,GL11.GL_COMPILE);
         {   drawUnitPlane();
         }
         GL11.glEndList();
@@ -190,8 +197,7 @@ public class CS2150Coursework extends GraphicsLab
     }
     protected void renderScene()
     {
-    	
-        // draw the ground plane
+    	// draw the ground plane
         GL11.glPushMatrix();
         {
             // disable lighting calculations so that they don't affect
@@ -276,7 +282,17 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glPushMatrix();
         {
         	Planet planet = new Planet();
+        	
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            // change the geometry colour to white so that the texture
+            // is bright and details can be seen clearly
+            Colour.WHITE.submit();
+            
         	planet.DrawPlanet(2.0f, 4.0f, -16.0f, planet2Texture, 0.7f);
+        	
+        	GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -302,6 +318,7 @@ public class CS2150Coursework extends GraphicsLab
         // draw the tree 1
         GL11.glPushMatrix();
         {
+	        
 			 Tree tree = new Tree();
 			 tree.drawTree(0.0f, -1.0f, -11.0f);
         }
@@ -325,7 +342,7 @@ public class CS2150Coursework extends GraphicsLab
         // draw the house
         GL11.glPushMatrix();
         {
-
+/*
 	        // how shiny are the front faces of the house (specular exponent)
 	        float houseFrontShininess  = 2.0f;
 	        // specular reflection of the front faces of the house
@@ -337,7 +354,7 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, houseFrontShininess);
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(houseFrontSpecular));
 	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(houseFrontDiffuse));
-
+*/
 	        GL11.glEnable(GL11.GL_TEXTURE_2D);
 	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,BrickTexture.getTextureID());
 	        
@@ -350,6 +367,7 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glCallList(houseList);
 	        
 	        GL11.glDisable(GL11.GL_TEXTURE_2D);
+	        GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -360,16 +378,17 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
         	
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
 
 	        // draw the base of the robot body t
-	        robot1.DrawRobotBody(robotFront,robotBack,robotBack,robotBack,robotBack,robotBack);
+	        robot1.DrawRobotBody(robotFrontTexture,robotBackTexture,robotBackTexture,robotBackTexture,robotBackTexture,robotBackTexture);
 	        
 	        GL11.glDisable(GL11.GL_TEXTURE_2D);
+	        GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -380,7 +399,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
         	
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
@@ -389,6 +408,7 @@ public class CS2150Coursework extends GraphicsLab
             robot1.DrawRobotLegLeft();
             
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -400,7 +420,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
             
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
@@ -409,6 +429,7 @@ public class CS2150Coursework extends GraphicsLab
             robot1.DrawRobotLegRight();
             
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -420,7 +441,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
             
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
@@ -429,6 +450,7 @@ public class CS2150Coursework extends GraphicsLab
             robot1.DrawRobotNeck();
             
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -439,7 +461,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
         	
             GL11.glTranslatef(0.0f, currentValue, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
@@ -448,6 +470,7 @@ public class CS2150Coursework extends GraphicsLab
             robot1.DrawRobotArmLeft();
             
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
         
@@ -458,7 +481,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
         	
             GL11.glTranslatef(0.0f, currentValue, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
@@ -466,6 +489,7 @@ public class CS2150Coursework extends GraphicsLab
             
             robot1.DrawRobotArmRight();
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
 	    }
 	    GL11.glPopMatrix();
 	    
@@ -476,7 +500,7 @@ public class CS2150Coursework extends GraphicsLab
             //Colour.WHITE.submit();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBackTexture.getTextureID());
             
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(headSpin, 0.0f, 1.0f, 0.0f);
@@ -484,8 +508,28 @@ public class CS2150Coursework extends GraphicsLab
             
             robot1.DrawRobotHead();
             GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glPopAttrib();
 		}
 		GL11.glPopMatrix();
+		
+		GL11.glPushMatrix();
+        {
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            
+            Colour.WHITE.submit();
+            
+	        GL11.glEnable(GL11.GL_TEXTURE_2D);
+	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,starTexture.getTextureID());
+            
+            GL11.glTranslatef(0.0f,-1.0f,-10.0f);
+            GL11.glScalef(1.0f, 1.0f, 1.0f);
+	        
+	        GL11.glDisable(GL11.GL_TEXTURE_2D); 
+	        GL11.glPopAttrib();
+        }
+        GL11.glPopMatrix();
+		
 }
     
     protected void cleanupScene()
