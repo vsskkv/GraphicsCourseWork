@@ -3,17 +3,15 @@ package coursework;
 
 import org.lwjgl.opengl.GL11;
 
-import GraphicsLab.Colour;
 import GraphicsLab.Normal;
 import GraphicsLab.Vertex;
 import org.newdawn.slick.opengl.Texture;
-import GraphicsLab.*;
 
 public class Robot {
 	private Texture robotFront;
 	
 	public Robot() {
-		//robotFront = loadTexture("courseWork/RobotTextures/robot.png");
+		robotFront = loadTexture("courseWork/Robot");
 	}
 
 	
@@ -27,7 +25,7 @@ public class Robot {
     	DrawRobotHead();
     }
     */
-public void DrawRobotLegLeft(Texture texture) {
+public void DrawRobotLegLeft() {
     	
     	//draw left leg of robot 
         Vertex v1 = new Vertex(-0.5f, -0.5f,  0.5f);
@@ -213,16 +211,6 @@ public void DrawRobotBody() {
         Vertex v6 = new Vertex(-0.5f,  3.5f, -0.5f);
         Vertex v7 = new Vertex( 2.5f,  3.5f, -0.5f);
         Vertex v8 = new Vertex( 2.5f,  0.5f, -0.5f);
-        
-        GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-        GL11.glDisable(GL11.GL_LIGHTING);
-        Colour.WHITE.submit();
-        
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotFront.getTextureID());
-        
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glPopAttrib();
         
         GL11.glBegin(GL11.GL_POLYGON);
         {        	

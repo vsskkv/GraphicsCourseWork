@@ -95,9 +95,7 @@ public class CS2150Coursework extends GraphicsLab
         planet2Texture = loadTexture("coursework/textures/planet2.bmp");
         planet3Texture = loadTexture("coursework/textures/Planet3.png");
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
-        
-        //Robot Textures
-        robotFront = loadTexture("coursework/textures/RobotTexture/robot.png");
+        robotFront = loadTexture("coursework/RobotTextures.robot.png");
 
         // global ambient light level
         float globalAmbient[]   = {0.7f,  0.7f,  0.7f, 1.0f};
@@ -359,7 +357,7 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotLegLeft(robotFront);
+        robot1.DrawRobotLegLeft();
         }
         GL11.glPopMatrix();
         

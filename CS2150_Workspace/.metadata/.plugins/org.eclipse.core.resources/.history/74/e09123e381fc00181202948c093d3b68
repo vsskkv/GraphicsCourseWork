@@ -7,13 +7,13 @@ import GraphicsLab.Colour;
 import GraphicsLab.Normal;
 import GraphicsLab.Vertex;
 import org.newdawn.slick.opengl.Texture;
-import GraphicsLab.*;
+mport GraphicsLab.*;
 
 public class Robot {
 	private Texture robotFront;
 	
 	public Robot() {
-		//robotFront = loadTexture("courseWork/RobotTextures/robot.png");
+		robotFront = loadTexture("courseWork/RobotTextures/robot.png");
 	}
 
 	
@@ -27,7 +27,7 @@ public class Robot {
     	DrawRobotHead();
     }
     */
-public void DrawRobotLegLeft(Texture texture) {
+public void DrawRobotLegLeft() {
     	
     	//draw left leg of robot 
         Vertex v1 = new Vertex(-0.5f, -0.5f,  0.5f);

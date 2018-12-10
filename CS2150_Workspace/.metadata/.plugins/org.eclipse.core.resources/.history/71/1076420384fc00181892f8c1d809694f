@@ -359,7 +359,7 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotLegLeft(robotFront);
+        robot1.DrawRobotLegLeft();
         }
         GL11.glPopMatrix();
         

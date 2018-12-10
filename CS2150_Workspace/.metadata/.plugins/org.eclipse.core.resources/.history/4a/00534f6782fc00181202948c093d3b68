@@ -13,7 +13,7 @@ public class Robot {
 	private Texture robotFront;
 	
 	public Robot() {
-		//robotFront = loadTexture("courseWork/RobotTextures/robot.png");
+		robotFront = loadTexture("courseWork/RobotTextures/robot.png");
 	}
 
 	
