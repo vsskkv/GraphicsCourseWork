@@ -168,7 +168,7 @@ public class CS2150Coursework extends GraphicsLab
         	currentZPos += 0.001f;
         	currentXPos += 0.0001f;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle >= -90.0f) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle >= 90.0f) {
         	roationAngle += 0.1f;
         }
     }
