@@ -92,8 +92,9 @@ public class CS2150Coursework extends GraphicsLab
     private float robotUp = -6.0f;
     private float currentZPos = -2.0f;
     private float currentXPos = 0.0f;
-    private float roationAngle = 10.0f;
+    private float roationAngle = 10.0f; 
     
+    //private int counter = 1;
 
     public static void main(String args[])
     {   new CS2150Coursework().run(WINDOWED,"Coursework-Submission",0.01f);
@@ -114,7 +115,7 @@ public class CS2150Coursework extends GraphicsLab
         robotFrontTexture = loadTexture("coursework/textures/RobotTextures/robot.png");
         robotBackTexture = loadTexture("coursework/textures/RobotTextures/robotBack.png");
         
-        starTexture = loadTexture("coursework/textures/shootingStar.png");
+        starTexture = loadTexture("coursework/textures/shootingStar1.png");
         // global ambient light level
         float globalAmbient[]   = {0.2f,  0.2f,  0.2f, 1f};
         // set the global ambient lighting
@@ -168,7 +169,7 @@ public class CS2150Coursework extends GraphicsLab
         	currentZPos += 0.001f;
         	currentXPos += 0.0001f;
         }
-        if(Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle >= -90.0f) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle >= 90.0f) {
         	roationAngle += 0.1f;
         }
     }
@@ -181,8 +182,6 @@ public class CS2150Coursework extends GraphicsLab
     
     protected void updateScene()
     {
-
-    	
     	update += + 1.0f * getAnimationScale();
     	
     	if(headRoation == false) {
@@ -210,9 +209,8 @@ public class CS2150Coursework extends GraphicsLab
     			reached = false;
     		}
     	}
-    	
-
     }
+    
     protected void renderScene()
     {
     	// draw the ground plane
@@ -336,7 +334,6 @@ public class CS2150Coursework extends GraphicsLab
         // draw the tree 1
         GL11.glPushMatrix();
         {
-	        
 			 Tree tree = new Tree();
 			 tree.drawTree(0.0f, -1.0f, -11.0f);
         }
@@ -360,19 +357,6 @@ public class CS2150Coursework extends GraphicsLab
         // draw the house
         GL11.glPushMatrix();
         {
-/*
-	        // how shiny are the front faces of the house (specular exponent)
-	        float houseFrontShininess  = 2.0f;
-	        // specular reflection of the front faces of the house
-	        float houseFrontSpecular[] = {1.0f, 0.0f, 0.0f, 1.0f};
-	        // diffuse reflection of the front faces of the house
-	        float houseFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
-	        
-	        // set the material properties for the house using OpenGL
-	        GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, houseFrontShininess);
-	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(houseFrontSpecular));
-	        GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(houseFrontDiffuse));
-*/
 	        GL11.glEnable(GL11.GL_TEXTURE_2D);
 	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,BrickTexture.getTextureID());
 	        
@@ -388,7 +372,6 @@ public class CS2150Coursework extends GraphicsLab
 	        GL11.glPopAttrib();
         }
         GL11.glPopMatrix();
-        
         
         //robot
         GL11.glPushMatrix();
@@ -527,15 +510,16 @@ public class CS2150Coursework extends GraphicsLab
             
 	        GL11.glEnable(GL11.GL_TEXTURE_2D);
 	        GL11.glBindTexture(GL11.GL_TEXTURE_2D,starTexture.getTextureID());
-            
-            GL11.glTranslatef(0.0f,-1.0f,-10.0f);
-            GL11.glScalef(1.0f, 1.0f, 1.0f);
 	        
-	        GL11.glDisable(GL11.GL_TEXTURE_2D); 
+	        GL11.glTranslatef(-30.0f,25.0f,-80.0f);
+            GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+            GL11.glScalef(5.0f, 3.0f, 5.0f);
+            GL11.glCallList(starList);
+            
+            GL11.glDisable(GL11.GL_TEXTURE_2D); 
 	        GL11.glPopAttrib();
-        }
-        GL11.glPopMatrix();
-		
+	    }
+	    GL11.glPopMatrix();
 }
     
     protected void cleanupScene()
