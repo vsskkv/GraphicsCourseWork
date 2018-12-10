@@ -17,6 +17,8 @@
 		<item value="false" key="linkWithEditor"/>
 		<item value="1" key="rootMode"/>
 	</section>
+	<section name="BreadcrumbItemDropDown">
+	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
 		<item value="true" key="create_unimplemented"/>
