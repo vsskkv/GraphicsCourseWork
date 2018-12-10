@@ -54,6 +54,8 @@ public class CS2150Coursework extends GraphicsLab
     private final int houseList = 1;
     /** display list id for the unit plane */
     private final int planeList = 2;
+    
+    private final int robotList = 3;
 
     /** ids for nearest, linear and mipmapped textures for the ground plane */
     private Texture groundTextures;
@@ -67,6 +69,7 @@ public class CS2150Coursework extends GraphicsLab
     private Texture planet3Texture;
     private Texture BrickTexture;
     private Texture robotFront;
+    private Texture robotBack;
     
     private Robot robot1 = new Robot();
     
@@ -97,7 +100,8 @@ public class CS2150Coursework extends GraphicsLab
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
         
         //Robot Textures
-        robotFront = loadTexture("coursework/textures/RobotTexture/robot.png");
+        robotFront = loadTexture("coursework/textures/RobotTextures/robot.png");
+        robotBack = loadTexture("coursework/textures/RobotTextures/robotBack.png");
 
         // global ambient light level
         float globalAmbient[]   = {0.7f,  0.7f,  0.7f, 1.0f};
@@ -131,6 +135,9 @@ public class CS2150Coursework extends GraphicsLab
         GL11.glEndList();
         
         GL11.glNewList(planeList,GL11.GL_COMPILE);
+        {   drawUnitPlane();
+        }
+        GL11.glNewList(robotList,GL11.GL_COMPILE);
         {   drawUnitPlane();
         }
         GL11.glEndList();
@@ -202,6 +209,10 @@ public class CS2150Coursework extends GraphicsLab
             GL11.glTranslatef(0.0f,-1.0f,-10.0f);
             GL11.glScalef(50.0f, 2.0f, 40.0f);
             GL11.glCallList(planeList);
+            
+            GL11.glTranslatef(0.0f,-1.0f,-10.0f);
+            //GL11.glScalef(50.0f, 2.0f, 40.0f);
+            GL11.glCallList(robotList);
             
             // disable textures and reset any local lighting changes
             GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -344,76 +355,135 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+        	
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
 
 	        // draw the base of the robot body t
-	        robot1.DrawRobotBody();
+	        robot1.DrawRobotBody(robotFront,robotBack,robotBack,robotBack,robotBack,robotBack);
+	        
+	        GL11.glDisable(GL11.GL_TEXTURE_2D);
         }
         GL11.glPopMatrix();
         
         GL11.glPushMatrix();
         {
-        // draw the ll using its display list
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
-            GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotLegLeft(robotFront);
-        }
-        GL11.glPopMatrix();
-        
-        
-        GL11.glPushMatrix();
-        {
-        // draw the roof using its display list
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
-            GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotLegRight();
-        }
-        GL11.glPopMatrix();
-        
-        
-        GL11.glPushMatrix();
-        {
-        // draw the roof using its display list
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
-            GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotNeck();
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
             
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+        	
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+            
+            robot1.DrawRobotLegLeft();
+            
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+        }
+        GL11.glPopMatrix();
+        
+        
+        GL11.glPushMatrix();
+        {
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+            
+            robot1.DrawRobotLegRight();
+            
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+        }
+        GL11.glPopMatrix();
+        
+        
+        GL11.glPushMatrix();
+        {
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            
+            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
+            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glScalef(0.07f, 0.07f, 0.07f);
+            
+            robot1.DrawRobotNeck();
+            
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
         }
         GL11.glPopMatrix();
         
         GL11.glPushMatrix();
         {
-        // draw the roof using its display list
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+        	
             GL11.glTranslatef(0.0f, currentValue, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotArmLeft();
+            
+            robot1.DrawRobotArmLeft();
+            
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
         }
         GL11.glPopMatrix();
         
         GL11.glPushMatrix();
         {
-        // draw the roof using its display list
+        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+        	
             GL11.glTranslatef(0.0f, currentValue, -2.0f);
             GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
-        robot1.DrawRobotArmRight();
+            
+            robot1.DrawRobotArmRight();
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
 	    }
 	    GL11.glPopMatrix();
 	    
        GL11.glPushMatrix();
 	    {
+	    	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //Colour.WHITE.submit();
+            
+        	GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
+            
             GL11.glTranslatef(0.0f, -0.5f, -2.0f);
             GL11.glRotatef(headSpin, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
-            
-        robot1.DrawRobotHead();
+            robot1.DrawRobotHead();
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
 		}
 		GL11.glPopMatrix();
 }

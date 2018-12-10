@@ -10,12 +10,12 @@ import org.newdawn.slick.opengl.Texture;
 import GraphicsLab.*;
 
 public class Robot {
+	
 	private Texture robotFront;
+	private Texture robotBack;
 	
 	public Robot() {
-		//robotFront = loadTexture("courseWork/RobotTextures/robot.png");
 	}
-
 	
 /*	public void DrawRobot() {
     	DrawRobotLegLeft();
@@ -27,7 +27,7 @@ public class Robot {
     	DrawRobotHead();
     }
     */
-public void DrawRobotLegLeft(Texture texture) {
+public void DrawRobotLegLeft() {
     	
     	//draw left leg of robot 
         Vertex v1 = new Vertex(-0.5f, -0.5f,  0.5f);
@@ -203,7 +203,8 @@ public void DrawRobotLegRight() {
         GL11.glEnd();
     }
     
-public void DrawRobotBody() {
+public void DrawRobotBody(Texture robotFront, Texture robotBack, Texture robotside, Texture robotside1, Texture robotSide2, Texture robotSide3) {
+		
         Vertex v1 = new Vertex(-0.5f,  0.5f,  0.5f);
         Vertex v2 = new Vertex(-0.5f,  3.5f,  0.5f);
         Vertex v3 = new Vertex( 2.5f,  3.5f,  0.5f);
@@ -214,23 +215,16 @@ public void DrawRobotBody() {
         Vertex v7 = new Vertex( 2.5f,  3.5f, -0.5f);
         Vertex v8 = new Vertex( 2.5f,  0.5f, -0.5f);
         
-        GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-        GL11.glDisable(GL11.GL_LIGHTING);
-        Colour.WHITE.submit();
-        
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotFront.getTextureID());
-        
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glPopAttrib();
-        
         GL11.glBegin(GL11.GL_POLYGON);
-        {        	
+        {            
             new Normal(v3.toVector(),v2.toVector(),v1.toVector(),v4.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
             v3.submit();
+            GL11.glTexCoord2f(1.0f,0.0f);
             v2.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v1.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v4.submit();
         }
         GL11.glEnd();
@@ -240,10 +234,13 @@ public void DrawRobotBody() {
         {
         	
             new Normal(v2.toVector(),v6.toVector(),v5.toVector(),v1.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
         	v2.submit();
+        	GL11.glTexCoord2f(1.0f,0.0f);
             v6.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v5.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v1.submit();
             
         }
@@ -253,10 +250,13 @@ public void DrawRobotBody() {
         GL11.glBegin(GL11.GL_POLYGON);
         {
             new Normal(v7.toVector(),v3.toVector(),v4.toVector(),v8.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
             v7.submit();
+            GL11.glTexCoord2f(1.0f,0.0f);
             v3.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v4.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v8.submit();
         }
         GL11.glEnd();
@@ -265,10 +265,13 @@ public void DrawRobotBody() {
         GL11.glBegin(GL11.GL_POLYGON);
         {
             new Normal(v7.toVector(),v6.toVector(),v2.toVector(),v3.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
             v7.submit();
+            GL11.glTexCoord2f(1.0f,0.0f);
             v6.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v2.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v3.submit();
         }
         GL11.glEnd();
@@ -277,10 +280,13 @@ public void DrawRobotBody() {
         GL11.glBegin(GL11.GL_POLYGON);
         {
             new Normal(v4.toVector(),v1.toVector(),v5.toVector(),v8.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
             v4.submit();
+            GL11.glTexCoord2f(1.0f,0.0f);
             v1.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v5.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v8.submit();
         }
         GL11.glEnd();
@@ -290,10 +296,13 @@ public void DrawRobotBody() {
         {
         	
             new Normal(v6.toVector(),v7.toVector(),v8.toVector(),v5.toVector()).submit();
-            
+            GL11.glTexCoord2f(0.0f,0.0f);
             v6.submit();
+            GL11.glTexCoord2f(1.0f,0.0f);
             v7.submit();
+            GL11.glTexCoord2f(1.0f,1.0f);
             v8.submit();
+            GL11.glTexCoord2f(0.0f,1.0f);
             v5.submit();
         }
         GL11.glEnd();
