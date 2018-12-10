@@ -50,6 +50,10 @@ import GraphicsLab.*;
  */
 public class CS2150Coursework extends GraphicsLab
 {
+	private final float RobotX = 0.0f;
+	private final float RobotY = -0.5f;
+	private final float RobotZ = -2.0f;
+	
     /** display list id for the house */
     private final int houseList = 1;
     /** display list id for the unit plane */
@@ -68,6 +72,7 @@ public class CS2150Coursework extends GraphicsLab
     private Texture planet2Texture;
     private Texture planet3Texture;
     private Texture BrickTexture;
+    
     private Texture robotFront;
     private Texture robotBack;
     
@@ -82,6 +87,10 @@ public class CS2150Coursework extends GraphicsLab
     private boolean headRoation = false; 
     private float headSpin = 0.0f;
 
+    private float robotUp = -6.0f;
+    private float currentZPos = -2.0f;
+    private float currentXPos = 0.0f;
+    private float roationAngle = 10.0f;
     
 
     public static void main(String args[])
@@ -104,25 +113,26 @@ public class CS2150Coursework extends GraphicsLab
         robotBack = loadTexture("coursework/textures/RobotTextures/robotBack.png");
 
         // global ambient light level
-        float globalAmbient[]   = {0.7f,  0.7f,  0.7f, 1.0f};
+        float globalAmbient[]   = {0.2f,  0.2f,  0.2f, 1f};
         // set the global ambient lighting
-        GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT,FloatBuffer.wrap(globalAmbient));
+        GL11.glLightModel(GL11.GL_LIGHT_MODEL_AMBIENT, FloatBuffer.wrap(globalAmbient));
 
-        // the first light for the scene is soft blue...
-        float diffuse0[]  = { 0.2f,  0.2f, 0.4f, 1.0f};
-        // ...with a very dim ambient contribution...
-        float ambient0[]  = { 0.05f,  0.05f, 0.05f, 1.0f};
-        // ...and is positioned above the viewpoint
-        float position0[] = { 5.0f, 5.0f, 0.0f, 1.0f};
+        
+        // the first light for the scene is white...
+        float diffuse0[]  = { 0.6f,  0.6f, 0.6f, 1.0f};
+        // ...with a dim ambient contribution...
+        float ambient0[]  = { 0.1f,  0.1f, 0.1f, 1.0f};
+        // ...and is positioned above and behind the viewpoint
+        float position0[] = { 0.0f, 10.0f, 1.0f, 1.0f}; 
 
         // supply OpenGL with the properties for the first light
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, FloatBuffer.wrap(ambient0));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, FloatBuffer.wrap(diffuse0));
-        GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, FloatBuffer.wrap(diffuse0));
+  		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, FloatBuffer.wrap(diffuse0));
         GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, FloatBuffer.wrap(position0));
         // enable the first light
         GL11.glEnable(GL11.GL_LIGHT0);
-
+        
         // enable lighting calculations
         GL11.glEnable(GL11.GL_LIGHTING);
         // ensure that all normals are re-normalised after transformations automatically
@@ -144,7 +154,17 @@ public class CS2150Coursework extends GraphicsLab
     }
     protected void checkSceneInput()
     {
-
+        if(Keyboard.isKeyDown(Keyboard.KEY_W) && currentZPos >= robotUp){   
+        	currentZPos -= 0.001f;
+        	currentXPos -= 0.0001f;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_S) && currentZPos <= RobotZ) {
+        	currentZPos += 0.001f;
+        	currentXPos += 0.0001f;
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle >= -90.0f) {
+        	roationAngle += 0.1f;
+        }
     }
     
     protected void setSceneCamera()
@@ -171,7 +191,6 @@ public class CS2150Coursework extends GraphicsLab
     			headRoation = false;
     		}
     	}
-    	System.out.println(headSpin);
     	
     	if(reached == false) {
     		currentValue = currentValue - 0.0001f;
@@ -353,20 +372,20 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
         
+        
+        //robot
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+        	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
         	
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, -0.5f, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
 
-	        // draw the base of the robot body t
+	        // draw the base of the robot body
 	        robot1.DrawRobotBody(robotFront,robotBack,robotBack,robotBack,robotBack,robotBack);
 	        
 	        GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -375,15 +394,13 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+        	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
         	
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, -0.5f, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotLegLeft();
@@ -395,15 +412,13 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+        	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
             
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, -0.5f, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotLegRight();
@@ -415,15 +430,13 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
-            
+        	 RobotLighting();
+        	 
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
             
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, -0.5f, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotNeck();
@@ -434,15 +447,13 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+        	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
         	
-            GL11.glTranslatef(0.0f, currentValue, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, currentValue, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotArmLeft();
@@ -453,15 +464,13 @@ public class CS2150Coursework extends GraphicsLab
         
         GL11.glPushMatrix();
         {
-        	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+        	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
         	
-            GL11.glTranslatef(0.0f, currentValue, -2.0f);
-            GL11.glRotatef(10.0f, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, currentValue, currentZPos);
+            GL11.glRotatef(roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotArmRight();
@@ -471,15 +480,13 @@ public class CS2150Coursework extends GraphicsLab
 	    
        GL11.glPushMatrix();
 	    {
-	    	GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-            GL11.glDisable(GL11.GL_LIGHTING);
-            //Colour.WHITE.submit();
+	    	 RobotLighting();
             
         	GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D,robotBack.getTextureID());
             
-            GL11.glTranslatef(0.0f, -0.5f, -2.0f);
-            GL11.glRotatef(headSpin, 0.0f, 1.0f, 0.0f);
+            GL11.glTranslatef(currentXPos, -0.5f, currentZPos);
+            GL11.glRotatef(headSpin + roationAngle, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(0.07f, 0.07f, 0.07f);
             
             robot1.DrawRobotHead();
@@ -665,11 +672,11 @@ public class CS2150Coursework extends GraphicsLab
     
     private void RobotLighting() {
         // how shiny are the front faces of the robot (specular exponent)
-        float RobotFrontShininess  = 2.0f;
+        float RobotFrontShininess  = 1.0f;
         // specular reflection of the front faces of the house
-        float RobotFrontSpecular[] = {0.1f, 0.0f, 0.0f, 1.0f};
+        float RobotFrontSpecular[] = {1.0f, 1.0f, 1.0f, 1.0f};
         // diffuse reflection of the front faces of the house
-        float RobotFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
+        float RobotFrontDiffuse[]  =  {1.0f, 1.0f, 1.0f, 1.0f};
         
         // set the material properties for the house using OpenGL
         GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, RobotFrontShininess);

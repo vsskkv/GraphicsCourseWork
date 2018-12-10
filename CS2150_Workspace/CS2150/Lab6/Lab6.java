@@ -83,10 +83,10 @@ public class Lab6 extends GraphicsLab
 
     protected void initScene() throws Exception
     {
-        // load the textures
+/*        // load the textures
         groundTextures = loadTexture("Lab6/textures/grass.bmp");
         //skyDayTextures = loadTexture("Lab6/textures/daySky.bmp");
-        skyNightTextures = loadTexture("Lab6/textures/nightSky.bmp");
+        skyNightTextures = loadTexture("Lab6/textures/nightSky.bmp")*/;
 
         // global ambient light level
         float globalAmbient[]   = {0.2f,  0.2f,  0.2f, 1.0f};

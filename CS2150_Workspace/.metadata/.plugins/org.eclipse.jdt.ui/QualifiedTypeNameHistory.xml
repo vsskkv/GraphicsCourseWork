@@ -7,4 +7,5 @@
 <fullyQualifiedTypeName name="javax.security.auth.callback.NameCallback"/>
 <fullyQualifiedTypeName name="coursework.CS2150Coursework"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.lwjgl.input.Keyboard"/>
 </qualifiedTypeNameHistroy>
