@@ -56,9 +56,7 @@ public class Starfish {
 		Vertex v9 = new Vertex(0.5f, -0.5f, 1.9f);
 		Vertex v10 = new Vertex(0.9f, -0.5f, 1.5f);
 		
-		Vertex v11 = new Vertex(1.2f, -0.2f, 1.7f); 
-		
-		Vertex v12 = new Vertex(1.2f, -0.8f, 1.7f);
+		Vertex v11 = new Vertex(1.2f, -0.2f, 1.7f);       
 
         GL11.glBegin(GL11.GL_POLYGON);
         {     
@@ -137,84 +135,24 @@ public class Starfish {
         }
         GL11.glEnd();
         
-        //second half
-        
-        GL11.glBegin(GL11.GL_POLYGON);
-        {     
-        	
-        	new Normal(v1.toVector(), v10.toVector(), v9.toVector(), v11.toVector()).submit();
-        	GL11.glTexCoord2f(0.0f, 1.0f);
-            v1.submit();
-            GL11.glTexCoord2f(0.0f,0.0f);
-            v10.submit();
-            GL11.glTexCoord2f(1.0f,0.0f);
-            v9.submit();
-            GL11.glTexCoord2f(1.0f,1.0f);
-            v11.submit();
-            
-        }
-        GL11.glEnd();	        
-        
-        GL11.glBegin(GL11.GL_POLYGON);
-        {     
-        	new Normal(v11.toVector(), v7.toVector(), v8.toVector(), v9.toVector()).submit();
-        	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
-            GL11.glTexCoord2f(0.0f,0.0f);
-            v7.submit();
-            GL11.glTexCoord2f(1.0f,0.0f);
-            v8.submit();
-            GL11.glTexCoord2f(1.0f,1.0f);
-            v9.submit();
-
-        }
-        GL11.glEnd();
-        
-        GL11.glBegin(GL11.GL_POLYGON);
-        {        
-        	
-        	new Normal(v11.toVector(), v5.toVector(), v6.toVector(), v7.toVector()).submit();
-        	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
-            GL11.glTexCoord2f(0.0f,0.0f);
-            v5.submit();
-            GL11.glTexCoord2f(1.0f,0.0f);
-            v6.submit();
-            GL11.glTexCoord2f(1.0f,1.0f);
-            v7.submit();
-
-        }
-        GL11.glEnd();
-        
-        GL11.glBegin(GL11.GL_POLYGON);
-        {     
-        	
-        	new Normal(v11.toVector(), v3.toVector(), v4.toVector(), v5.toVector()).submit();
-        	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
-            GL11.glTexCoord2f(0.0f,0.0f);
-            v3.submit();
-            GL11.glTexCoord2f(1.0f,0.0f);
-            v4.submit();
-            GL11.glTexCoord2f(1.0f,1.0f);
-            v5.submit();
-        }
-        GL11.glEnd();
-        
-        GL11.glBegin(GL11.GL_POLYGON);
-        {   
-        	
-        	new Normal(v11.toVector(), v1.toVector(), v2.toVector(), v3.toVector()).submit();
-        	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
-            GL11.glTexCoord2f(0.0f,0.0f);
-            v1.submit();
-            GL11.glTexCoord2f(1.0f,0.0f);
-            v2.submit();
-            GL11.glTexCoord2f(1.0f,1.0f);
-            v3.submit();
-        }
-        GL11.glEnd();
-        
+/*        GL11.glBegin(GL11.GL_POLYGON);
+		{
+			
+			new Normal(v1.toVector(), v2.toVector(), v3.toVector(), v4.toVector(), v5.toVector(), v6.toVector(), v7.toVector(), v8.toVector(), v9.toVector(), v10.toVector()).submit();
+		
+			v1.submit();
+			v2.submit();
+			v3.submit();
+			v4.submit();
+			v5.submit();
+			v6.submit();
+			v7.submit();
+			v8.submit();
+			v9.submit();
+			v10.submit();
+			//v1.submit();
+			
+		}
+		GL11.glEnd();*/
     }
 }

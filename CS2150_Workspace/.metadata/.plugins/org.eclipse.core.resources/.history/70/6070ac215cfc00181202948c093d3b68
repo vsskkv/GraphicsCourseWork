@@ -585,8 +585,6 @@ public class CS2150Coursework extends GraphicsLab
             v5.submit();
         }
         GL11.glEnd();
-        
-
     }
     
     private void RobotLighting() {
