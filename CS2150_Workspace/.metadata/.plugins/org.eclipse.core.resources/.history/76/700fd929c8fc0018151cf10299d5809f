@@ -21,7 +21,7 @@ public class Starfish {
         // position and scale of the object
         GL11.glTranslatef(xTranslate, yTranslate, zTranslate);
         GL11.glScalef(0.3f, 0.3f, 0.3f);
-        GL11.glRotatef(30, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(30, 0.0f, 1.0f, 0.0f);
         
         // how shiny are the front faces of the house (specular exponent)
         float FishFrontShininess  = 1.0f;
