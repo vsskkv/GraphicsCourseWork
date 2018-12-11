@@ -77,6 +77,7 @@ public class CS2150Coursework extends GraphicsLab
     private Texture robotFrontTexture;
     private Texture robotBackTexture;
     private Texture starTexture;
+    private Texture shotStar;
     
     private Robot robot1 = new Robot();
     
@@ -94,6 +95,9 @@ public class CS2150Coursework extends GraphicsLab
     private float currentXPos = 0.0f;
     private float roationAngle = 10.0f;
     
+    private float currentXStar = 1.0f;
+    private float currentYStar = 1.0f;
+    
 
     public static void main(String args[])
     {   new CS2150Coursework().run(WINDOWED,"Coursework-Submission",0.01f);
@@ -109,6 +113,7 @@ public class CS2150Coursework extends GraphicsLab
         planet2Texture = loadTexture("coursework/textures/planet2.bmp");
         planet3Texture = loadTexture("coursework/textures/Planet3.png");
         BrickTexture = loadTexture("coursework/textures/brick.bmp");
+        shotStar = loadTexture("coursework/textures/shootingStar1.png");
         
         //Robot Textures
         robotFrontTexture = loadTexture("coursework/textures/RobotTextures/robot.png");
@@ -196,8 +201,6 @@ public class CS2150Coursework extends GraphicsLab
     
     protected void updateScene()
     {
-
-    	
     	update += + 1.0f * getAnimationScale();
     	
     	if(headRoation == false) {
@@ -224,6 +227,10 @@ public class CS2150Coursework extends GraphicsLab
     		if(currentValue >= topValue) {
     			reached = false;
     		}
+    	}
+    	if(currentXStar >= 0.0f) {
+    		currentXStar += 0.1f;
+    		currentYStar -= 0.1f;
     	}
     	
 
@@ -551,6 +558,27 @@ public class CS2150Coursework extends GraphicsLab
         }
         GL11.glPopMatrix();
 		
+        //star
+        GL11.glPushMatrix();
+        {
+           GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+           GL11.glDisable(GL11.GL_LIGHTING);
+
+           Colour.WHITE.submit();
+
+           GL11.glEnable(GL11.GL_TEXTURE_2D);
+           GL11.glBindTexture(GL11.GL_TEXTURE_2D, shotStar.getTextureID());
+
+           GL11.glTranslatef(currentXStar, currentYStar, -5.0f);
+           GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+           GL11.glScalef(30.0f, 30.0f, 30.0f);
+           //GL11.glCallList(starList);
+
+         GL11.glDisable(GL11.GL_TEXTURE_2D);
+         GL11.glPopAttrib();
+        }
+        GL11.glPopMatrix();
+
 }
     
     protected void cleanupScene()
