@@ -20,8 +20,8 @@ public class Starfish {
 	public void Draw(float xTranslate, float yTranslate, float zTranslate, Texture text) {
         // position and scale of the object
         GL11.glTranslatef(xTranslate, yTranslate, zTranslate);
-        //GL11.glScalef(1.0f, 1.0f, 1.0f);
-        //GL11.glRotatef(0, 0.0f, 0.0f, 0.0f);
+        GL11.glScalef(0.4f, 0.4f, 0.4f);
+        GL11.glRotatef(80, 0.0f, 1.0f, 1.0f);
         
         // how shiny are the front faces of the house (specular exponent)
         float FishFrontShininess  = 1.0f;
@@ -142,7 +142,7 @@ public class Starfish {
         GL11.glBegin(GL11.GL_POLYGON);
         {     
         	
-        	new Normal(v1.toVector(), v10.toVector(), v9.toVector(), v11.toVector()).submit();
+        	new Normal(v1.toVector(), v10.toVector(), v9.toVector(), v12.toVector()).submit();
         	GL11.glTexCoord2f(0.0f, 1.0f);
             v1.submit();
             GL11.glTexCoord2f(0.0f,0.0f);
@@ -150,22 +150,22 @@ public class Starfish {
             GL11.glTexCoord2f(1.0f,0.0f);
             v9.submit();
             GL11.glTexCoord2f(1.0f,1.0f);
-            v11.submit();
+            v12.submit();
             
         }
         GL11.glEnd();	        
         
         GL11.glBegin(GL11.GL_POLYGON);
         {     
-        	new Normal(v11.toVector(), v7.toVector(), v8.toVector(), v9.toVector()).submit();
+        	new Normal(v11.toVector(), v9.toVector(), v8.toVector(), v7.toVector()).submit();
         	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
+            v12.submit();
             GL11.glTexCoord2f(0.0f,0.0f);
-            v7.submit();
+            v9.submit();
             GL11.glTexCoord2f(1.0f,0.0f);
             v8.submit();
             GL11.glTexCoord2f(1.0f,1.0f);
-            v9.submit();
+            v7.submit();
 
         }
         GL11.glEnd();
@@ -173,15 +173,15 @@ public class Starfish {
         GL11.glBegin(GL11.GL_POLYGON);
         {        
         	
-        	new Normal(v11.toVector(), v5.toVector(), v6.toVector(), v7.toVector()).submit();
+        	new Normal(v12.toVector(), v7.toVector(), v6.toVector(), v5.toVector()).submit();
         	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
+            v12.submit();
             GL11.glTexCoord2f(0.0f,0.0f);
-            v5.submit();
+            v7.submit();
             GL11.glTexCoord2f(1.0f,0.0f);
             v6.submit();
             GL11.glTexCoord2f(1.0f,1.0f);
-            v7.submit();
+            v5.submit();
 
         }
         GL11.glEnd();
@@ -189,32 +189,32 @@ public class Starfish {
         GL11.glBegin(GL11.GL_POLYGON);
         {     
         	
-        	new Normal(v11.toVector(), v3.toVector(), v4.toVector(), v5.toVector()).submit();
+        	new Normal(v12.toVector(), v5.toVector(), v4.toVector(), v3.toVector()).submit();
         	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
+            v12.submit();
             GL11.glTexCoord2f(0.0f,0.0f);
-            v3.submit();
+            v5.submit();
             GL11.glTexCoord2f(1.0f,0.0f);
             v4.submit();
             GL11.glTexCoord2f(1.0f,1.0f);
-            v5.submit();
+            v3.submit();
         }
         GL11.glEnd();
         
         GL11.glBegin(GL11.GL_POLYGON);
         {   
         	
-        	new Normal(v11.toVector(), v1.toVector(), v2.toVector(), v3.toVector()).submit();
+        	new Normal(v12.toVector(), v3.toVector(), v2.toVector(), v1.toVector()).submit();
         	GL11.glTexCoord2f(0.0f, 1.0f);
-            v11.submit();
+            v12.submit();
             GL11.glTexCoord2f(0.0f,0.0f);
-            v1.submit();
+            v3.submit();
             GL11.glTexCoord2f(1.0f,0.0f);
             v2.submit();
             GL11.glTexCoord2f(1.0f,1.0f);
-            v3.submit();
+            v1.submit();
         }
         GL11.glEnd();
-        
+
     }
 }

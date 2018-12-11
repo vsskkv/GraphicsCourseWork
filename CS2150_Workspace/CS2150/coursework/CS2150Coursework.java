@@ -22,10 +22,6 @@
 package coursework;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
-
-import javax.security.auth.callback.NameCallback;
-
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 
@@ -44,8 +40,12 @@ import GraphicsLab.*;
  * <li>While viewing the scene along the x, y or z axis, use the up and down
  * cursor keys to increase or decrease the viewpoint's distance from the scene
  * origin
- * <li>Press L to lower the sun
- * <li>Press R to raise the sun
+ * <li>Press W to make the robot go up
+ * <li>Press S to make the robot go down
+ * <li>Press A to make the robot turn left
+ * <li>Press D to make the robot turn right
+ * <li>Press P to play the animation
+ * <li>Press Space to reset animation
  * </ul>
  *
  * <p>
@@ -55,16 +55,14 @@ import GraphicsLab.*;
  */
 public class CS2150Coursework extends GraphicsLab {
 	private final float RobotX = 0.0f;
-	private final float RobotY = -0.5f;
 	private final float RobotZ = -2.0f;
+	private final float StarR = 0.0f;
 
 	/** display list id for the house */
 	private final int houseList = 1;
 	/** display list id for the unit plane */
 	private final int planeList = 2;
-
 	private final int robotList = 3;
-
 	private final int starList = 4;
 
 	/** ids for nearest, linear and mipmapped textures for the ground plane */
@@ -83,7 +81,6 @@ public class CS2150Coursework extends GraphicsLab {
 	private Texture robotFrontTexture;
 	private Texture robotBackTexture;
 	private Texture starTexture;
-	private Texture star;
 
 	private Robot robot1 = new Robot();
 
@@ -92,6 +89,7 @@ public class CS2150Coursework extends GraphicsLab {
 	private float bottomValue = -0.58f;
 	private float currentValue = -0.5f;
 	private boolean reached = false;
+	private boolean doLoop = false;
 
 	private boolean headRoation = false;
 	private float headSpin = 0.0f;
@@ -100,9 +98,15 @@ public class CS2150Coursework extends GraphicsLab {
 	private float currentZPos = -2.0f;
 	private float currentXPos = 0.0f;
 	private float roationAngle = 10.0f;
-
-	private float currentXStar = 1.0f;
-	private float currentYStar = 1.0f;
+	private boolean headRotationFunction = true;
+	
+	private boolean temp1 = false;
+	private boolean temp2 = false;
+	private boolean temp3 = false;
+	
+	private float starR1 = 1.0f;
+	private float starR2 = 1.0f;
+	private float starR3 = 1.0f;
 
 	public static void main(String args[]) {
 		new CS2150Coursework().run(WINDOWED, "Coursework-Submission", 0.01f);
@@ -117,7 +121,7 @@ public class CS2150Coursework extends GraphicsLab {
 		planet2Texture = loadTexture("coursework/textures/planet2.bmp");
 		planet3Texture = loadTexture("coursework/textures/Planet3.png");
 		BrickTexture = loadTexture("coursework/textures/brick.bmp");
-		star = loadTexture("coursework/textures/shootingStar1.png");
+		//star = loadTexture("coursework/textures/shootingStar1.png");
 
 		// Robot Textures
 		robotFrontTexture = loadTexture("coursework/textures/RobotTextures/robot.png");
@@ -193,9 +197,17 @@ public class CS2150Coursework extends GraphicsLab {
 			}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
-			currentXPos = RobotX;
-			currentZPos = RobotZ;
-
+			resetAnimations();
+			headRotationFunction = false;
+			doLoop = true;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
+			resetAnimations();
+		}
+		//testing
+		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
+			System.out.println("X: " + currentXPos + " Z: " + currentZPos);
+			
 		}
 	}
 
@@ -205,21 +217,22 @@ public class CS2150Coursework extends GraphicsLab {
 	}
 
 	protected void updateScene() {
+		
 		update += +1.0f * getAnimationScale();
-
-		if (headRoation == false) {
-			headSpin += 1.0f * getAnimationScale();
-			if (headSpin >= 40.0f) {
-				headRoation = true;
+		if(headRotationFunction == true) {
+			if (headRoation == false) {
+				headSpin += 1.0f * getAnimationScale();
+				if (headSpin >= 40.0f) {
+					headRoation = true;
+				}
+			}
+			if (headRoation == true) {
+				headSpin -= 1.0f * getAnimationScale();
+				if (headSpin <= -40.0f) {
+					headRoation = false;
+				}
 			}
 		}
-		if (headRoation == true) {
-			headSpin -= 1.0f * getAnimationScale();
-			if (headSpin <= -40.0f) {
-				headRoation = false;
-			}
-		}
-
 		if (reached == false) {
 			currentValue = currentValue - 0.0001f;
 			if (currentValue <= bottomValue) {
@@ -232,11 +245,43 @@ public class CS2150Coursework extends GraphicsLab {
 				reached = false;
 			}
 		}
-		if (currentXStar >= 0.0f) {
-			currentXStar += 0.1f;
-			currentYStar -= 0.1f;
+		if(doLoop == true) {
+			temp1 = true;
+			if (temp1 == true) {
+				if(currentXPos >= -0.3f && currentZPos >= -4.9f) {
+					currentZPos -= 0.001f;
+					currentXPos -= 0.0001f;
+				
+					if(currentXPos <= -0.1f && currentZPos <= -3.6f) {
+						starR1 = StarR;
+					}
+					if(currentXPos <= -0.26f && currentZPos <= -4.3f) {
+						starR2 = StarR;
+						temp2 = true;
+						temp1 = false;
+					}
+				}
+			}
+			if(temp2 == true) {
+				if(currentXPos <= 2.0f) {
+					currentXPos += 0.001f;
+					if(roationAngle != -180.0f) {
+						roationAngle -= 1.0f;
+					}
+					if(currentXPos >= 1.8f) {
+						starR3 = StarR;
+						temp3 = true;
+						temp2 = false;
+					}
+				}
+			}
+			if(temp3 == true) {
+				if(!(currentXPos >= RobotX && currentZPos >= RobotZ)) {
+					currentZPos += 0.001f;
+					currentXPos -= 0.001f;
+				}
+			}
 		}
-
 	}
 
 	protected void renderScene() {
@@ -374,11 +419,28 @@ public class CS2150Coursework extends GraphicsLab {
 			tree1.drawTree(3.0f, -1.0f, -15.0f);
 		}
 		GL11.glPopMatrix();
-
+		
+		// star 1
 		GL11.glPushMatrix();
 		{
 			Starfish starfish = new Starfish();
-			starfish.Draw(0.0f, -0.1f, -5.0f, starFishTexture);
+			starfish.Draw(-0.5f * starR1, -1.0f * starR1, -5.0f * starR1, starFishTexture);
+		}
+		GL11.glPopMatrix();
+		
+		// Star 2
+		GL11.glPushMatrix();
+		{
+			Starfish starfish = new Starfish();
+			starfish.Draw(-0.5f * starR2, -1.0f * starR2, -7.0f * starR2, starFishTexture);
+		}
+		GL11.glPopMatrix();
+		
+		// Star 3
+		GL11.glPushMatrix();
+		{
+			Starfish starfish = new Starfish();
+			starfish.Draw(1.0f * starR3, -1.0f * starR3, -5.0f * starR3, starFishTexture);
 		}
 		GL11.glPopMatrix();
 
@@ -571,10 +633,11 @@ public class CS2150Coursework extends GraphicsLab {
 	}
 
 	private void resetAnimations() {
-		/*
-		 * // reset all attributes that are modified by user controls or animations
-		 * currentSunMoonY = highestSunMoonY; risingSunMoon = true;
-		 */
+		currentXPos = RobotX;
+		currentZPos = RobotZ;
+		
+		headRoation = true;
+		headRotationFunction = false;
 	}
 
 	/**
