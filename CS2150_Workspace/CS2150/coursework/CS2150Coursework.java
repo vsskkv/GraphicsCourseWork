@@ -434,7 +434,14 @@ public class CS2150Coursework extends GraphicsLab {
             GL11.glEnable(GL11.GL_TEXTURE_2D);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, controlTexture.getTextureID());
 
+	        //Create Nearest Filtered Texture
+	        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+	        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
+	        //Different possible texture parameters, e.g. GL10.GL_CLAMP_TO_EDGE
+	        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+	        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+	        
             // rotate, scale, position and draw
             GL11.glTranslatef(1.0f, 1.0f, -5.0f);
             GL11.glScalef(3.0f, 3.0f, 0.0f);
