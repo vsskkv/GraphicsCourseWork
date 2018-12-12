@@ -22,6 +22,7 @@
 package coursework;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 
@@ -77,7 +78,7 @@ public class CS2150Coursework extends GraphicsLab {
 	private Texture plantTexture;
 	private Texture planet2Texture;
 	private Texture planet3Texture;
-	private Texture BrickTexture;
+	private Texture controlTexture;
 	private Texture robotFrontTexture;
 	private Texture robotBackTexture;
 	private Texture starTexture;
@@ -115,12 +116,13 @@ public class CS2150Coursework extends GraphicsLab {
 	protected void initScene() throws Exception {
 		// load the textures
 		groundTextures = loadTexture("coursework/textures/Grass01.bmp");
-		backGroundTexture = loadTexture("coursework/textures/space.bmp");
+		backGroundTexture = loadTexture("coursework/textures/SpaceBackground.jpg");
 		starFishTexture = loadTexture("coursework/textures/1.bmp");
 		plantTexture = loadTexture("coursework/textures/space2.jpg");
 		planet2Texture = loadTexture("coursework/textures/planet2.bmp");
 		planet3Texture = loadTexture("coursework/textures/Planet3.png");
-		BrickTexture = loadTexture("coursework/textures/brick.bmp");
+		controlTexture = loadTexture("Examples/BorgCube/textures/borg.bmp");
+				//loadTexture("coursework/textures/Controls.png");
 		//star = loadTexture("coursework/textures/shootingStar1.png");
 
 		// Robot Textures
@@ -137,7 +139,7 @@ public class CS2150Coursework extends GraphicsLab {
 		float diffuse0[] = { 0.6f, 0.6f, 0.6f, 1.0f };
 		// ...with a dim ambient contribution...
 		float ambient0[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-		// ...and is positioned above and behind the viewpoint
+		// ...and is positioned above and behind the viewpoint 
 		float position0[] = { 0.0f, 10.0f, 1.0f, 1.0f };
 
 		// supply OpenGL with the properties for the first light
@@ -153,12 +155,7 @@ public class CS2150Coursework extends GraphicsLab {
 		// ensure that all normals are re-normalised after transformations automatically
 		GL11.glEnable(GL11.GL_NORMALIZE);
 
-		// prepare the display lists for later use
-		GL11.glNewList(houseList, GL11.GL_COMPILE);
-		{
-			drawUnitCube();
-		}
-		GL11.glEndList();
+		// prepare the display lists for later us
 
 		GL11.glNewList(planeList, GL11.GL_COMPILE);
 		{
@@ -184,16 +181,20 @@ public class CS2150Coursework extends GraphicsLab {
 			currentZPos += 0.001f;
 			currentXPos += 0.0001f;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_A) && roationAngle <= 90.0f) {
-			roationAngle += 0.1f;
-			if (roationAngle >= 90.0f && currentXPos >= -3.0f) {
-				currentXPos -= 0.00001f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			if (roationAngle <= 90.0f) {
+				roationAngle += 0.1f;
+			}
+			if (roationAngle >= 87.0f && currentXPos >= -3.0f) {
+				currentXPos -= 0.0001f;
 			}
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_D) && roationAngle >= -90.0f) {
-			roationAngle -= 0.1f;
-			if (roationAngle <= -90.0f && currentXPos <= 3.0f) {
-				currentXPos += 0.00001f;
+		if (Keyboard.isKeyDown(Keyboard.KEY_D) ) {
+			if(roationAngle >= -90.0f) {
+				roationAngle -= 0.1f;
+			} 
+			if (roationAngle <= -87.0f && currentXPos <= 6.0f) {
+				currentXPos += 0.0001f;
 			}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
@@ -214,6 +215,7 @@ public class CS2150Coursework extends GraphicsLab {
 	protected void setSceneCamera() {
 		// use the default projection settings
 		super.setSceneCamera();
+	
 	}
 
 	protected void updateScene() {
@@ -329,35 +331,9 @@ public class CS2150Coursework extends GraphicsLab {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, backGroundTexture.getTextureID());
 
 			// position, scale and draw the back plane using its display list
-			GL11.glTranslatef(40.0f, 4.0f, -100.0f);
+			GL11.glTranslatef(40.0f, 4.0f, -90.0f);
 			GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-			GL11.glScalef(300.0f, 200.0f, 90.0f);
-			GL11.glCallList(planeList);
-
-			// disable textures and reset any local lighting changes
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glPopAttrib();
-		}
-		GL11.glPopMatrix();
-
-		// draw the back Right plane
-		GL11.glPushMatrix();
-		{
-			// disable lighting calculations so that they don't affect
-			// the appearance of the texture
-			GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-			GL11.glDisable(GL11.GL_LIGHTING);
-			// change the geometry colour to white so that the texture
-			// is bright and details can be seen clearly
-			Colour.WHITE.submit();
-			// enable texturing and bind an appropriate texture
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, backGroundTexture.getTextureID());
-			
-			// position, scale and draw the back plane using its display list
-			GL11.glTranslatef(0.0f, 0.0f, 0.0f);
-			GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-			GL11.glScalef(200.0f, 200.0f, 20.0f);
+			GL11.glScalef(600.0f, 100.0f, 210.0f);
 			GL11.glCallList(planeList);
 
 			// disable textures and reset any local lighting changes
@@ -443,38 +419,32 @@ public class CS2150Coursework extends GraphicsLab {
 			starfish.Draw(1.0f * starR3, -1.0f * starR3, -5.0f * starR3, starFishTexture);
 		}
 		GL11.glPopMatrix();
+		
+		//sqaure
+       GL11.glPushMatrix();
+        {
+			// disable lighting calculations so that they don't affect
+			// the appearance of the texture
+			GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			// change the geometry colour to white so that the texture
+			// is bright and details can be seen clearly
+			Colour.WHITE.submit();
+            // enable texturing and bind an appropriate texture
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, controlTexture.getTextureID());
 
-		// draw the house
-		GL11.glPushMatrix();
-		{
 
-			// how shiny are the front faces of the house (specular exponent)
-			float houseFrontShininess = 2.0f;
-			// specular reflection of the front faces of the house
-			float houseFrontSpecular[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-			// diffuse reflection of the front faces of the house
-			float houseFrontDiffuse[] = { 0.6f, 0.2f, 0.2f, 1.0f };
+            // rotate, scale, position and draw
+            GL11.glTranslatef(1.0f, 1.0f, -5.0f);
+            GL11.glScalef(3.0f, 3.0f, 0.0f);
+            //GL11.glRotatef(0.0f, 0.5f, 1.0f, 0.0f);
+            drawUnitCube();
 
-			// set the material properties for the house using OpenGL
-			GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, houseFrontShininess);
-			GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(houseFrontSpecular));
-			GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(houseFrontDiffuse));
 
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, BrickTexture.getTextureID());
-
-			// position and scale of the object
-			GL11.glTranslatef(4.0f, -0.3f, -15.0f);
-			GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
-			GL11.glScalef(1.0f, 1.0f, 1.0f);
-
-			// draw the base of the house using its display list
-			GL11.glCallList(houseList);
-
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glPopAttrib();
-		}
-		GL11.glPopMatrix();
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+        }
+        GL11.glPopMatrix();
 
 		// robot
 		GL11.glPushMatrix();
@@ -629,7 +599,8 @@ public class CS2150Coursework extends GraphicsLab {
 		GL11.glPopMatrix();
 	}
 
-	protected void cleanupScene() {// empty
+	protected void cleanupScene() {
+		// empty
 	}
 
 	private void resetAnimations() {
@@ -689,114 +660,96 @@ public class CS2150Coursework extends GraphicsLab {
 		}
 	}
 
-	private void drawUnitCube() {
-		// the vertices for the cube (note that all sides have a length of 1)
-		Vertex v1 = new Vertex(-0.5f, -0.5f, 0.5f);
-		Vertex v2 = new Vertex(-0.5f, 0.5f, 0.5f);
-		Vertex v3 = new Vertex(1.5f, 0.5f, 0.5f);
-		Vertex v4 = new Vertex(1.5f, -0.5f, 0.5f);
-		Vertex v5 = new Vertex(-0.5f, -0.5f, -0.5f);
-		Vertex v6 = new Vertex(-0.5f, 0.5f, -0.5f);
-		Vertex v7 = new Vertex(1.5f, 0.5f, -0.5f);
-		Vertex v8 = new Vertex(1.5f, -0.5f, -0.5f);
 
-		// draw the near face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v3.toVector(), v2.toVector(), v1.toVector(), v4.toVector()).submit();
+	private void drawUnitCube()
+    {
+        // the vertices for the cube (note that all sides have a length of 1)
+        Vertex v1 = new Vertex(-0.5f, -0.5f,  0.5f);
+        Vertex v2 = new Vertex(-0.5f,  0.5f,  0.5f);
+        Vertex v3 = new Vertex( 0.5f,  0.5f,  0.5f);
+        Vertex v4 = new Vertex( 0.5f, -0.5f,  0.5f);
+        Vertex v5 = new Vertex(-0.5f, -0.5f,  0.4f);
+        Vertex v6 = new Vertex(-0.5f,  0.5f,  0.4f);
+        Vertex v7 = new Vertex( 0.5f,  0.5f,  0.4f);
+        Vertex v8 = new Vertex( 0.5f, -0.5f,  0.4f);
 
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v3.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v2.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v1.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v4.submit();
-		}
-		GL11.glEnd();
+        // draw the near face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v3.toVector(),v2.toVector(),v1.toVector(),v4.toVector()).submit();
+            
+            GL11.glTexCoord2f(1.0f, 1.0f);
+            v3.submit();
+            GL11.glTexCoord2f(0.0f, 1.0f);
+            v2.submit();
+            GL11.glTexCoord2f(0.0f, 0.0f);
+            v1.submit();
+            GL11.glTexCoord2f(1.0f, 0.0f);
+            v4.submit();
+        }
+        GL11.glEnd();
 
-		// draw the left face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v2.toVector(), v6.toVector(), v5.toVector(), v1.toVector()).submit();
+        // draw the left face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v2.toVector(),v6.toVector(),v5.toVector(),v1.toVector()).submit();
+            
+            v2.submit();
+            v6.submit();
+            v5.submit();
+            v1.submit();
+        }
+        GL11.glEnd();
 
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v2.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v6.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v5.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v1.submit();
-		}
-		GL11.glEnd();
+        // draw the right face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v7.toVector(),v3.toVector(),v4.toVector(),v8.toVector()).submit();
+            
+            v7.submit();
+            v3.submit();
+            v4.submit();
+            v8.submit();
+        }
+        GL11.glEnd();
 
-		// draw the right face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v7.toVector(), v3.toVector(), v4.toVector(), v8.toVector()).submit();
+        // draw the top face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v7.toVector(),v6.toVector(),v2.toVector(),v3.toVector()).submit();
+            
+            v7.submit();
+            v6.submit();
+            v2.submit();
+            v3.submit();
+        }
+        GL11.glEnd();
 
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v7.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v3.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v4.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v8.submit();
-		}
-		GL11.glEnd();
+        // draw the bottom face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v4.toVector(),v1.toVector(),v5.toVector(),v8.toVector()).submit();
+            
+            v4.submit();
+            v1.submit();
+            v5.submit();
+            v8.submit();
+        }
+        GL11.glEnd();
 
-		// draw the top face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v7.toVector(), v6.toVector(), v2.toVector(), v3.toVector()).submit();
+        // draw the far face:
+        GL11.glBegin(GL11.GL_POLYGON);
+        {
+            new Normal(v6.toVector(),v7.toVector(),v8.toVector(),v5.toVector()).submit();
+            
+            v6.submit();
+            v7.submit();
+            v8.submit();
+            v5.submit();
+        }
+        GL11.glEnd();
+    }
 
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v7.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v6.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v2.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v3.submit();
-		}
-		GL11.glEnd();
-
-		// draw the bottom face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v4.toVector(), v1.toVector(), v5.toVector(), v8.toVector()).submit();
-
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v4.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v1.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v5.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v8.submit();
-		}
-		GL11.glEnd();
-
-		// draw the far face:
-		GL11.glBegin(GL11.GL_POLYGON);
-		{
-			new Normal(v6.toVector(), v7.toVector(), v8.toVector(), v5.toVector()).submit();
-
-			GL11.glTexCoord2f(4.0f, 4.0f);
-			v6.submit();
-			GL11.glTexCoord2f(0.0f, 4.0f);
-			v7.submit();
-			GL11.glTexCoord2f(0.0f, 0.0f);
-			v8.submit();
-			GL11.glTexCoord2f(4.0f, 0.0f);
-			v5.submit();
-		}
-		GL11.glEnd();
-
-	}
 
 	private void RobotLighting() {
 		// how shiny are the front faces of the robot (specular exponent)
