@@ -23,25 +23,35 @@ public class Starfish {
         GL11.glScalef(0.4f, 0.4f, 0.4f);
         GL11.glRotatef(80, 0.0f, 1.0f, 1.0f);
         
+	    // how shiny are the front faces of the moon (specular exponent)
+		GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+		//GL11.glDisable(GL11.GL_LIGHTING);
+		// change the geometry colour to white so that the texture
+		// is bright and details can be seen clearly
+		Colour.RED.submit(); 
+        
         // how shiny are the front faces of the house (specular exponent)
-        float FishFrontShininess  = 1.0f;
+        float FishFrontShininess  = 20.0f;
         // specular reflection of the front faces of the house
-        float FishFrontSpecular[] = {0.5f, 0.5f, 0.5f, 2.0f};
+        float FishFrontSpecular[] = {1.0f, 1.0f, 1.0f, 2.0f};
         // diffuse reflection of the front faces of the house
-        float FishFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 5.0f};
+        float FishFrontDiffuse[]  = {0.6f, 0.2f, 0.2f, 1.0f};
         
         // set the material properties for the house using OpenGL
         GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, FishFrontShininess);
         GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(FishFrontSpecular));
         GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(FishFrontDiffuse));
 
+
+        
         // draw the star fish
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,text.getTextureID());
+        /*GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,text.getTextureID());*/
         
         DrawStarFish();
         
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        //GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glPopAttrib();
 	}
 
     private void DrawStarFish() {
