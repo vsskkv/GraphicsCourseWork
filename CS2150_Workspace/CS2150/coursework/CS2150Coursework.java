@@ -1,23 +1,55 @@
 /* 
  * FileName: CS2150Coursework.java
- * Brief:
- * Author:
+ * Brief: This class places all the object on the screen together, as well as that it determines all
+ * the movement on the screen, so depending on the user's input it does different movements.
+ * Author: Vikram Kainth Singh, Mahamuda Akhter, Melika Taghyoon
  * Created: 22/11/2018
  * 
  * Scene Graph:
  *  Scene origin
  *  |
- *  +-- [S(20,1,20) T(0,-1,-10)] Ground plane
+ *  +-- [S(0,-1,-10) T(50,2,40)] Ground plane
  *  |
  *  |
- *  +-- [T(4,currentSunMoonY,-19)] Planet
+ *  +-- [T(40,4,-100) R(90,1,0,0) S(300,200,90)] Sky plane
  *  |
  *  |
- *  +-- [T(0,-1,-12)] Tree
- *  |   |
- *  |   +-- [Rx(-90)] Trunk
- *  |   |
- *  |   +-- [T(0,2,0)] Leafy head
+ *  +-- [T(2,4,-16,)] Planet
+ *  |
+ *  |
+ *  +-- [T(4,6,-18)] Pp
+ *  |
+ *  |
+ *  +--[R((360* update * 0.05),0,1,0) T(1,0,0)] Pp
+ *  |
+ *  |
+ *  +--[T(0,-1,-11)] Tree
+ *  |
+ *  |+--[T(3,-1,-15)] Tree1
+ *  |
+ *  |
+ *  +--[T(0,-0.1,-5)] Startfish
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotBody
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotLeftleg
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotRightleg
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotneck
+ *  |
+ *  |
+ *  +--[T(currentXPos, currentValue, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotLeftarm
+ *  |
+ *  |
+ *  +--[T(currentXPos, currentValue, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotRightarm
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(headSpin + roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotHead
  */
 package coursework;
 
@@ -402,9 +434,9 @@ public class CS2150Coursework extends GraphicsLab {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, BrickTexture.getTextureID());
 
 			// position and scale of the object
-			GL11.glTranslatef(4.0f, -0.3f, -15.0f);
-			GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
-			GL11.glScalef(1.0f, 1.0f, 1.0f);
+			//GL11.glTranslatef(4.0f, -0.3f, -15.0f);
+			//GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
+			//GL11.glScalef(1.0f, 1.0f, 1.0f);
 
 			// draw the base of the house using its display list
 			GL11.glCallList(houseList);
@@ -550,12 +582,6 @@ public class CS2150Coursework extends GraphicsLab {
 
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, starTexture.getTextureID());
-			//System.out.println("star");
-			
-			//GL11.glTranslatef(0f, 0f, -10.0f);
-			//GL11.glRotatef(100.0f, 1.0f, 0.0f, 0.0f);
-			//GL11.glScalef(50.0f, 20.0f, 50.0f);
-			//GL11.glCallList(starList);
 			
 			GL11.glTranslatef(0.0f, 0.0f, 0.0f);
 			GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);

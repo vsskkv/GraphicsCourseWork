@@ -1,3 +1,10 @@
+/* 
+ * FileName: CS2150Coursework.java
+ * Brief: This class create all the necessary function for the starfish.
+ * Author: Vikram Kainth Singh, Mahamuda Akhter, Melika Taghyoon
+ * Created: 22/11/2018
+ */
+
 package coursework;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Sphere;

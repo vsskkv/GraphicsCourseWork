@@ -1,5 +1,11 @@
+/* 
+ * FileName: CS2150Coursework.java
+ * Brief: This class create all the necessary function for the robot.
+ * Author: Vikram Kainth Singh, Mahamuda Akhter, Melika Taghyoon
+ * Created: 22/11/2018
+ */
+
 package coursework;
-//SnowFlake the robot
 
 import org.lwjgl.opengl.GL11;
 
