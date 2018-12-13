@@ -225,6 +225,7 @@ public abstract class GraphicsLab
                 displayMode = availableModes[i];
                 //TODO: consider removing output - leave output to show what is the selected display mode
                 System.out.println("Selected display mode: " + displayMode.toString() + "\n");
+                //System.out.println(hwratio);
                 break;
             }
         }
@@ -314,7 +315,7 @@ public abstract class GraphicsLab
         // aspect ratio and visible range of 0.1 to 100.0 scene units
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GLU.gluPerspective(45.0f,hwratio,0.1f,100.0f);
+        GLU.gluPerspective(90.0f,hwratio ,0.1f,100.0f);
 
         // default viewpoint is positioned at the scene origin facing along the negative Z axis
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
