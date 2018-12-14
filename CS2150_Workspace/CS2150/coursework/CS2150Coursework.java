@@ -1,8 +1,13 @@
-/* 
+/** 
  * FileName: CS2150Coursework.java
- * Brief:
- * Author:
- * Created: 22/11/2018
+ * Brief: This is a program that was created for the CS2150 Coursework.
+ *        This is a game scene for a robot moving on a planet where the robot is collecting stars.
+ *        There are planets here and stars also the robot is on a planet where other planets are visible.
+ * Author: Vikram Singh Kainth, Melika Taghyoon, Mahamuda Akhter.
+ * Created: 15/11/2018.
+ * Course: Computer Graphics CS2150.
+ * Year: 2nd.
+ * Statement: This is our own work.
  * 
  * Scene Graph:
  *  Scene origin
@@ -24,7 +29,6 @@
 package coursework;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.opengl.Texture;
 
@@ -49,48 +53,43 @@ import GraphicsLab.*;
  * </ul>
  *
  * <p>
- * Adapted from Mark Bernard's LWJGL NeHe samples
- *
- * @author Anthony Jones and Dan Cornford
  */
 public class CS2150Coursework extends GraphicsLab {
-	private final float RobotX = 0.0f;
-	private final float RobotZ = -2.0f;
-	private final float StarR = 0.0f;
+	
+	/** Final values for permate positions for the robot */ 
+	private static final float ROBOT_X = 0.0f;
+	private static final float ROBOT_Z = -2.0f;
+	private static final float STAR_R = 0.0f;
 
 	/** display list id for the unit plane, robot, stars */
-	private final int planeList = 1;
-	private final int robotList = 2;
-	private final int starList = 3;
+	private static final int planeList = 1;
+	private static final int robotList = 2;
+	private static final int starList = 3;
 
 	/** ids for nearest, linear and mipmapped textures for the ground plane */
 	private Texture groundTextures;
 	/**
 	 * ids for nearest, linear and mipmapped textures for the night time back
-	 * background plane
-	 * {@link https://fstoppers.com/news/japan-landed-space-rovers-aste0roid-and-first-pictures-are-here-292344}
+	 * background plane = {@link https://fstoppers.com/news/japan-landed-space-rovers-aste0roid-and-first-pictures-are-here-292344}
 	 */
 	private Texture backGroundTexture;
-	private Texture starFishTexture;
-	private Texture controlTexture;
+	private Texture starFishTexture;;
 	private Texture robotFrontTexture;
 	private Texture robotBackTexture;
-	private Texture starTexture;
 	
-	// Textures for the planets 
+	/** Textures for the planets */ 
 	private Texture plantTexture;
 	private Texture planet2Texture;
 	private Texture planet3Texture;
 	private Texture planet4Texture;
 	private Texture planet5Texture;
 	private Texture planet6Texture;
-	private Texture planet7Texture;
 	private Texture planet8Texture;
 
-	//creations of robot instance
+	/** creations of robot instance */
 	private Robot robot1 = new Robot();
 
-	//values for robot movement
+	/** values for robot movement */
 	private float update = 0.0f;
 	private float topValue = -0.5f;
 	private float bottomValue = -0.58f;
@@ -98,31 +97,37 @@ public class CS2150Coursework extends GraphicsLab {
 	private boolean reached = false;
 	private boolean doLoop = false;
 
-	// Robot head roatation
+	/** Robot head rotation and boolean value to tell it to do so or not */
 	private boolean headRoation = false;
 	private float headSpin = 0.0f;
 
-	//movement of robot variables 
+	/** movement of robot variables */ 
 	private float robotUp = -6.0f;
 	private float currentZPos = -2.0f;
 	private float currentXPos = 0.0f;
 	private float roationAngle = 10.0f;
 	private boolean headRotationFunction = true;
 	
-	// Set movement for the player controllers
+	/** Set movement for the player controllers */
 	private boolean temp1 = false;
 	private boolean temp2 = false;
 	private boolean temp3 = false;
 	
-	// set position for gems starts for player
+	/** set position for gems starts for player */
 	private float starR1 = 1.0f;
 	private float starR2 = 1.0f;
 	private float starR3 = 1.0f;
 
+	/**main method to run the program */
 	public static void main(String args[]) {
 		new CS2150Coursework().run(WINDOWED, "Coursework-Submission", 0.01f);
 	}
-
+	
+	/**
+	 * @throws Exception if texture isn't found or error occurs here.
+	 * This Function here is abl'e to set the textures, set the global lighting and set up the draw-list.
+	 * - The global lighting is set to white and at the positions [T(1.0, 10.0, 1.0)]
+	 * */
 	protected void initScene() throws Exception {
 		// load the textures
 		groundTextures = loadTexture("coursework/textures/Grass01.bmp");
@@ -136,7 +141,6 @@ public class CS2150Coursework extends GraphicsLab {
 		planet4Texture = loadTexture("coursework/textures/Planets/planet4.jpg");
 		planet5Texture = loadTexture("coursework/textures/Planets/planet5.jpg");
 		planet6Texture = loadTexture("coursework/textures/Planets/planet6.jpg");
-		planet7Texture = loadTexture("coursework/textures/Planets/planet7.jpg");
 		planet8Texture = loadTexture("coursework/textures/Planets/planet8.jpg");
 
 		// Robot Textures
@@ -153,7 +157,7 @@ public class CS2150Coursework extends GraphicsLab {
 		// ...with a dim ambient contribution...
 		float ambient0[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 		// ...and is positioned above and behind the viewpoint 
-		float position0[] = { 0.0f, 10.0f, 1.0f, 1.0f };
+		float position0[] = { 1.0f, 10.0f, 1.0f, 1.0f };
 
 		// supply OpenGL with the properties for the first light
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, FloatBuffer.wrap(ambient0));
@@ -185,12 +189,25 @@ public class CS2150Coursework extends GraphicsLab {
 		GL11.glEndList();
 	}
 	
+	/**
+	 * Keyboard keys are set here:
+	 * - W: robot travels up the map
+	 * - A: robot travels in the left direction by turning the robot left and then moving
+	 * - S: robot travels down the map
+	 * - D: robot travels right by first rotating the robot then moving it
+	 * 
+	 * - P: Plays the scene where the robot will collect the stars.
+	 * 
+	 * - Space_Bar: resets the robot position
+	 * 
+	 * - T: prints the robots Coordinates; X, Z
+	 * */
 	protected void checkSceneInput() {
 		if (Keyboard.isKeyDown(Keyboard.KEY_W) && currentZPos >= robotUp) {
 			currentZPos -= 0.001f;
 			currentXPos -= 0.0001f;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_S) && currentZPos <= RobotZ) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_S) && currentZPos <= ROBOT_Z) {
 			currentZPos += 0.001f;
 			currentXPos += 0.0001f;
 		}
@@ -218,22 +235,29 @@ public class CS2150Coursework extends GraphicsLab {
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			resetAnimations();
 		}
-		//testing
+		// Testing printing the robots X and Z
 		if (Keyboard.isKeyDown(Keyboard.KEY_T)) {
 			System.out.println("X: " + currentXPos + " Z: " + currentZPos);
 			
 		}
 	}
 
+	/**
+	 * Camera position is set here 
+	 * {@link GraphicsLab.GraphicsLab.java}, i set the super camera position to be further away to get more of the scene in the screen 
+	 * */
 	protected void setSceneCamera() {
 		// use the default projection settings
 		super.setSceneCamera();
-	
 	}
-
+	
+	/**
+	 * 
+	 * */
 	protected void updateScene() {
-		
+		// Planets moon is rotating around it is set here  to increase
 		update += +1.0f * getAnimationScale();
+		
 		if(headRotationFunction == true) {
 			if (headRoation == false) {
 				headSpin += 1.0f * getAnimationScale();
@@ -268,10 +292,10 @@ public class CS2150Coursework extends GraphicsLab {
 					currentXPos -= 0.0001f;
 				
 					if(currentXPos <= -0.1f && currentZPos <= -3.6f) {
-						starR1 = StarR;
+						starR1 = STAR_R;
 					}
 					if(currentXPos <= -0.26f && currentZPos <= -4.3f) {
-						starR2 = StarR;
+						starR2 = STAR_R;
 						temp2 = true;
 						temp1 = false;
 					}
@@ -284,14 +308,14 @@ public class CS2150Coursework extends GraphicsLab {
 						roationAngle -= 1.0f;
 					}
 					if(currentXPos >= 1.8f) {
-						starR3 = StarR;
+						starR3 = STAR_R;
 						temp3 = true;
 						temp2 = false;
 					}
 				}
 			}
 			if(temp3 == true) {
-				if(!(currentXPos >= RobotX && currentZPos >= RobotZ)) {
+				if(!(currentXPos >= ROBOT_X && currentZPos >= ROBOT_Z)) {
 					currentZPos += 0.001f;
 					currentXPos -= 0.001f;
 				}
@@ -494,8 +518,8 @@ public class CS2150Coursework extends GraphicsLab {
 	}
 
 	private void resetAnimations() {
-		currentXPos = RobotX;
-		currentZPos = RobotZ;
+		currentXPos = ROBOT_X;
+		currentZPos = ROBOT_Z;
 		
 		headRoation = true;
 		headRotationFunction = false;
@@ -728,7 +752,7 @@ public class CS2150Coursework extends GraphicsLab {
 			GL11.glTranslatef(-2.0f, 7.0f, -10.0f);
 			GL11.glRotatef((360.0f * update  * 0.03f), 0.0f, 1.0f, 0.0f);
 			Planet pp = new Planet();
-			pp.drawBody(planet6Texture, 0.6f);
+			pp.drawBody(planet3Texture, 0.6f);
 			GL11.glPopAttrib();
 		} // restore origin
 		GL11.glPopMatrix();
