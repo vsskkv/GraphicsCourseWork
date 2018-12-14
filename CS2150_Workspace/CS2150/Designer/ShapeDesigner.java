@@ -36,15 +36,15 @@ public class ShapeDesigner extends AbstractDesigner {
 	/** Draw the shape **/
 	    protected void drawUnitShape()
 	    {
-	/*    	DrawRobotLegLeft();
+	    	DrawRobotLegLeft();
 	    	DrawRobotLegRight();
 	    	DrawRobotBody();
 	    	DrawRobotArmLeft();
 	    	DrawRobotArmRight();
 	    	DrawRobotNeck(); 
-	    	DrawRobotHead();*/
+	    	DrawRobotHead();
 	    	
-	    	DrawStarFish(Colour.BLUE);
+	    	//DrawStarFish(Colour.BLUE);
 	    }
 
 
