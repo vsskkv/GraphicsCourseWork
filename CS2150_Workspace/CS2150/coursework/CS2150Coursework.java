@@ -12,19 +12,48 @@
  * Scene Graph:
  *  Scene origin
  *  |
- *  +-- [S(20,1,20) T(0,-1,-10)] Ground plane
+ *  +-- [S(0,-1,-10) T(50,2,40)] Ground plane
  *  |
  *  |
- *  +-- [T(4,currentSunMoonY,-19)] Planet
+ *  +-- [T(40,4,-100) R(90,1,0,0) S(300,200,90)] Sky plane
  *  |
  *  |
- *  +-- [T(0,-1,-12)] Tree
- *  |   |
- *  |   +-- [Rx(-90)] Trunk
- *  |   |
- *  |   +-- [T(0,2,0)] Leafy head
+ *  +-- [T(2,4,-16,)] Planet
  *  |
- *  +-- [T(), S()] Robot
+ *  |
+ *  +-- [T(4,6,-18)] Pp
+ *  |
+ *  |
+ *  +--[R((360* update * 0.05),0,1,0) T(1,0,0)] Pp
+ *  |
+ *  |
+ *  +--[T(0,-1,-11)] Tree
+ *  |
+ *  |+--[T(3,-1,-15)] Tree1
+ *  |
+ *  |
+ *  +--[T(0,-0.1,-5)] Startfish
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotBody
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotLeftleg
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotRightleg
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotneck
+ *  |
+ *  |
+ *  +--[T(currentXPos, currentValue, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotLeftarm
+ *  |
+ *  |
+ *  +--[T(currentXPos, currentValue, currentZPos) R(roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotRightarm
+ *  |
+ *  |
+ *  +--[T(currentXPos, -0.5, currentZPos) R(headSpin + roationAngle, 0, 1, 0) S(0.07, 0.07, 0.07)] robotHead
  */
 package coursework;
 
@@ -378,6 +407,101 @@ public class CS2150Coursework extends GraphicsLab {
 			GL11.glPopAttrib();
 		}
 		GL11.glPopMatrix();
+		
+		// draw the planet 2
+		GL11.glPushMatrix();
+		{
+			Planet planet = new Planet();
+
+			GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
+			GL11.glDisable(GL11.GL_LIGHTING);
+			// change the geometry colour to white so that the texture
+			// is bright and details can be seen clearly
+			Colour.WHITE.submit();
+
+			planet.DrawPlanet(2.0f, 4.0f, -16.0f, planet2Texture, 0.7f);
+
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glPopAttrib();
+		}
+		GL11.glPopMatrix();
+
+		// first planet with moon rotating
+		GL11.glPushMatrix();
+		{
+			// the planet 1
+			GL11.glTranslatef(4.0f, 6.0f, -18.0f);
+			// draw the Earth
+			Planet pp = new Planet();
+			pp.drawBody(plantTexture, 0.6f);
+
+			// rotate the Moon around the Earth
+			GL11.glRotatef((360.0f * update * 0.05f), 0.0f, 1.0f, 0.0f);
+			// the Moon is .5 units from the Earth
+			GL11.glTranslatef(1.0f, 0.0f, 0.0f);
+			// draw the moon
+			pp.drawBody(planet3Texture, 0.3f);
+
+		} // restore origin
+		GL11.glPopMatrix();
+
+		// draw the tree 1
+		GL11.glPushMatrix();
+		{
+
+			Tree tree = new Tree();
+			tree.drawTree(0.0f, -1.0f, -11.0f);
+		}
+		GL11.glPopMatrix();
+
+		// draw the tree2
+		GL11.glPushMatrix();
+		{
+			Tree tree1 = new Tree();
+			tree1.drawTree(3.0f, -1.0f, -15.0f);
+		}
+		GL11.glPopMatrix();
+
+		GL11.glPushMatrix();
+		{
+			Starfish starfish = new Starfish();
+			starfish.Draw(0.0f, -0.1f, -5.0f, starFishTexture);
+		}
+		GL11.glPopMatrix();
+
+		// draw the house
+		GL11.glPushMatrix();
+		{
+
+			// how shiny are the front faces of the house (specular exponent)
+			float houseFrontShininess = 2.0f;
+			// specular reflection of the front faces of the house
+			float houseFrontSpecular[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+			// diffuse reflection of the front faces of the house
+			float houseFrontDiffuse[] = { 0.6f, 0.2f, 0.2f, 1.0f };
+
+			// set the material properties for the house using OpenGL
+			GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, houseFrontShininess);
+			GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, FloatBuffer.wrap(houseFrontSpecular));
+			GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, FloatBuffer.wrap(houseFrontDiffuse));
+
+			/*
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, BrickTexture.getTextureID());
+
+			// position and scale of the object
+			//GL11.glTranslatef(4.0f, -0.3f, -15.0f);
+			//GL11.glRotatef(35.0f, 0.0f, 1.0f, 0.0f);
+			//GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			// draw the base of the house using its display list
+			GL11.glCallList(houseList);
+			*/
+			
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glPopAttrib();
+		}
+		GL11.glPopMatrix();
 
 		drawPlanets();
 		
@@ -511,6 +635,7 @@ public class CS2150Coursework extends GraphicsLab {
 			GL11.glPopAttrib();
 		}
 		GL11.glPopMatrix();
+		
 	}
 
 	protected void cleanupScene() {
